@@ -1,4 +1,6 @@
 # Swift Machine Learning Library
+[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat)](https://developer.apple.com/swift)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mattt/Surge/blob/master/LICENSE)
 
 The Swift Machine Learning Library (SMLL, pronounced *"small"*) is meant to provide various machine learning tools written in Swift with support for iOS and mac OS. For now, it is just a personal project I use as a space to implement algorithms which I have learned about so far. Nevertheless, I give my best to do so in a sensible way in order to be able to make some use of it in the future.
 
