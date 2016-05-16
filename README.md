@@ -11,3 +11,10 @@ The library bears a pretty fancy name which is by far not justified in its curre
   - [x] Matrix Library using SIMD (GPU accelerated) instructions via Apple's Accelerate framework
   - [x] Feedforward Neural Network trained using backpropagation
   - [ ] Convolutional Network
+
+## To Do
+
+The following list contains some tasks which should be completed to improve the library:
+
+  - [ ] Find a better way of testing a matrix' contents
+  - [ ] Make FeedforwardNeuralNetwork-class platform independent (currently accesses iOS filesystem)
