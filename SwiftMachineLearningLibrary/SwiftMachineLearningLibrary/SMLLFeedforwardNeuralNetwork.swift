@@ -39,22 +39,21 @@ public class SMLLFeedforwardNeuralNetwork {
     }
     
     /**
-     Initializes the FNN from a given file.
+     Initializes the FNN from a given storage representation.
      */
-    public init (fileName: String) throws {
-        let documentsURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-        if let ioRepresentationDictionary = NSDictionary(contentsOfURL: documentsURL.URLByAppendingPathComponent(fileName)) {
-            if let layerSizes = (ioRepresentationDictionary.valueForKey("LayerSizes") as? [Int]) {
+    public init (fileURL: NSURL) throws {
+        if let  storageRepresentationDictionary = NSDictionary(contentsOfURL: fileURL) {
+            if let layerSizes = ( storageRepresentationDictionary.valueForKey("LayerSizes") as? [Int]) {
                 self.layerSizes = layerSizes
             } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "LayerSizes") }
             
             self.numberOfLayers = self.layerSizes.count
             
-            if let weights = (ioRepresentationDictionary.valueForKey("Weights") as? [NSDictionary]) {
+            if let weights = ( storageRepresentationDictionary.valueForKey("Weights") as? [NSDictionary]) {
                 self.weights = try weights.map({try SMLLMatrix(ioRepresentation: $0)})
             } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "Weights") }
             
-            if let biases = (ioRepresentationDictionary.valueForKey("Biases") as? [NSDictionary]) {
+            if let biases = ( storageRepresentationDictionary.valueForKey("Biases") as? [NSDictionary]) {
                 self.biases = try biases.map({try SMLLMatrix(ioRepresentation: $0)})
             } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "Biases") }
         }
@@ -160,20 +159,19 @@ public class SMLLFeedforwardNeuralNetwork {
     }
     
     
-    // MARK: - I/O-methods
+    // MARK: - Storage methods
     
-    public func writeToFile(fileName: String) throws {
+    public func writeToFile(fileURL: NSURL) {
         let weightsIORepresentation = NSArray(array: weights.map({$0.getIORepresentation()}))
         let biasesIORepresentation = NSArray(array: biases.map({$0.getIORepresentation()}))
         let layerSizesIORepresentation = NSArray(array: layerSizes)
         
-        let ioRepresentationDictionary = NSDictionary()
-        ioRepresentationDictionary.setValue(weightsIORepresentation, forKey: "Weights")
-        ioRepresentationDictionary.setValue(biasesIORepresentation, forKey: "Biases")
-        ioRepresentationDictionary.setValue(layerSizesIORepresentation, forKey: "LayerSizes")
+        let  storageRepresentationDictionary = NSDictionary()
+         storageRepresentationDictionary.setValue(weightsIORepresentation, forKey: "Weights")
+         storageRepresentationDictionary.setValue(biasesIORepresentation, forKey: "Biases")
+         storageRepresentationDictionary.setValue(layerSizesIORepresentation, forKey: "LayerSizes")
         
-        let documentsURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-        ioRepresentationDictionary.writeToURL(documentsURL.URLByAppendingPathComponent(fileName), atomically: true)
+        storageRepresentationDictionary.writeToURL(fileURL, atomically: true)
     }
     
     
