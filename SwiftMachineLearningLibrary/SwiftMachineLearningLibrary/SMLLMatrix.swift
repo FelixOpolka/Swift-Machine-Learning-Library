@@ -223,3 +223,9 @@ public struct SMLLMatrix: CustomStringConvertible {
         return ioRepresentation
     }
 }
+
+
+extension SMLLMatrix: Equatable {}
+public func == (lhs: SMLLMatrix, rhs: SMLLMatrix) -> Bool {
+    return lhs.rows == rhs.rows && lhs.columns == rhs.columns && lhs.elements == rhs.elements
+}

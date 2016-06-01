@@ -23,18 +23,12 @@ class SMLLMatrixTests: XCTestCase {
     
     func testTranspose() {
         let matrix34 = SMLLMatrix(rows: 3, columns: 4, sequence: true).transpose()
-        XCTAssertEqual(matrix34[0, 0], 1.0)
-        XCTAssertEqual(matrix34[0, 1], 5.0)
-        XCTAssertEqual(matrix34[0, 2], 9.0)
-        XCTAssertEqual(matrix34[1, 0], 2.0)
-        XCTAssertEqual(matrix34[1, 1], 6.0)
-        XCTAssertEqual(matrix34[1, 2], 10.0)
-        XCTAssertEqual(matrix34[2, 0], 3.0)
-        XCTAssertEqual(matrix34[2, 1], 7.0)
-        XCTAssertEqual(matrix34[2, 2], 11.0)
-        XCTAssertEqual(matrix34[3, 0], 4.0)
-        XCTAssertEqual(matrix34[3, 1], 8.0)
-        XCTAssertEqual(matrix34[3, 2], 12.0)
+        let checkMatrix = SMLLMatrix(rows: 4, columns: 3, values:
+            [1.0, 5.0, 9.0,
+            2.0, 6.0, 10.0,
+            3.0, 7.0, 11.0,
+            4.0, 8.0, 12.0])
+        XCTAssertEqual(matrix34, checkMatrix)
     }
     
     func testTransposePerformance() {
@@ -46,10 +40,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testSubmatrix() {
         let testMatrix = SMLLMatrix(rows: 3, columns: 3, sequence: true).submatrixFromRowStart(0, rowEnd: 1, columnStart: 1, columnEnd: 2)
-        XCTAssertEqual(testMatrix[0,0], 2.0)
-        XCTAssertEqual(testMatrix[0,1], 3.0)
-        XCTAssertEqual(testMatrix[1,0], 5.0)
-        XCTAssertEqual(testMatrix[1,1], 6.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 2, values:
+            [2.0, 3.0,
+            5.0, 6.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     func testSubmatrixPerformance() {
@@ -60,14 +54,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testAddition() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 4, sequence: true) + SMLLMatrix(rows: 2, columns: 4, sequence: true)
-        XCTAssertEqual(testMatrix[0,0], 2.0)
-        XCTAssertEqual(testMatrix[0,1], 4.0)
-        XCTAssertEqual(testMatrix[0,2], 6.0)
-        XCTAssertEqual(testMatrix[0,3], 8.0)
-        XCTAssertEqual(testMatrix[1,0], 10.0)
-        XCTAssertEqual(testMatrix[1,1], 12.0)
-        XCTAssertEqual(testMatrix[1,2], 14.0)
-        XCTAssertEqual(testMatrix[1,3], 16.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 4, values:
+            [2.0, 4.0, 6.0, 8.0,
+            10.0, 12.0, 14.0, 16.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     
@@ -82,14 +72,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMatrixAddition() {
         let testMatrix = 3.0 + SMLLMatrix(rows: 2, columns: 4, sequence: true)
-        XCTAssertEqual(testMatrix[0,0], 4.0)
-        XCTAssertEqual(testMatrix[0,1], 5.0)
-        XCTAssertEqual(testMatrix[0,2], 6.0)
-        XCTAssertEqual(testMatrix[0,3], 7.0)
-        XCTAssertEqual(testMatrix[1,0], 8.0)
-        XCTAssertEqual(testMatrix[1,1], 9.0)
-        XCTAssertEqual(testMatrix[1,2], 10.0)
-        XCTAssertEqual(testMatrix[1,3], 11.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 4, values:
+            [4.0, 5.0, 6.0, 7.0,
+            8.0, 9.0, 10.0, 11.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     
@@ -103,14 +89,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testSubtraction() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 4, sequence: true) - SMLLMatrix(rows: 2, columns: 4, repeatedValue: 2.0)
-        XCTAssertEqual(testMatrix[0,0], -1.0)
-        XCTAssertEqual(testMatrix[0,1], 0.0)
-        XCTAssertEqual(testMatrix[0,2], 1.0)
-        XCTAssertEqual(testMatrix[0,3], 2.0)
-        XCTAssertEqual(testMatrix[1,0], 3.0)
-        XCTAssertEqual(testMatrix[1,1], 4.0)
-        XCTAssertEqual(testMatrix[1,2], 5.0)
-        XCTAssertEqual(testMatrix[1,3], 6.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 4, values:
+            [-1.0, 0.0, 1.0, 2.0,
+            3.0, 4.0, 5.0, 6.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     func testSubtractionPerformance() {
@@ -124,12 +106,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testNegation() {
         let testMatrix = -SMLLMatrix(rows: 2, columns: 3, sequence: true)
-        XCTAssertEqual(testMatrix[0,0], -1.0)
-        XCTAssertEqual(testMatrix[0,1], -2.0)
-        XCTAssertEqual(testMatrix[0,2], -3.0)
-        XCTAssertEqual(testMatrix[1,0], -4.0)
-        XCTAssertEqual(testMatrix[1,1], -5.0)
-        XCTAssertEqual(testMatrix[1,2], -6.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [-1.0, -2.0, -3.0,
+            -4.0, -5.0, -6.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     func testNegationPerformance() {
@@ -142,12 +122,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMultiplication() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 3, sequence: true) * 2.0
-        XCTAssertEqual(testMatrix[0,0], 2.0)
-        XCTAssertEqual(testMatrix[0,1], 4.0)
-        XCTAssertEqual(testMatrix[0,2], 6.0)
-        XCTAssertEqual(testMatrix[1,0], 8.0)
-        XCTAssertEqual(testMatrix[1,1], 10.0)
-        XCTAssertEqual(testMatrix[1,2], 12.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [2.0, 4.0, 6.0,
+            8.0, 10.0, 12.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     
@@ -161,12 +139,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testMatrixScalarDivision() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 3, sequence: true) / 2.0
-        XCTAssertEqual(testMatrix[0,0], 0.5)
-        XCTAssertEqual(testMatrix[0,1], 1.0)
-        XCTAssertEqual(testMatrix[0,2], 1.5)
-        XCTAssertEqual(testMatrix[1,0], 2.0)
-        XCTAssertEqual(testMatrix[1,1], 2.5)
-        XCTAssertEqual(testMatrix[1,2], 3.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [0.5, 1.0, 1.5,
+            2.0, 2.5, 3.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     
@@ -180,12 +156,11 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMatrixDivision() {
         let testMatrix = 30.0 / SMLLMatrix(rows: 2, columns: 3, sequence: true)
-        XCTAssertEqual(testMatrix[0,0], 30.0)
-        XCTAssertEqual(testMatrix[0,1], 15.0)
-        XCTAssertEqual(testMatrix[0,2], 10.0)
-        XCTAssertEqual(testMatrix[1,0], 7.5)
-        XCTAssertEqual(testMatrix[1,1], 6.0)
-        XCTAssertEqual(testMatrix[1,2], 5.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [30.0, 15.0,
+            10.0, 7.5,
+            6.0, 5.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     
@@ -199,10 +174,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testMatrixMultiplication() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 3, values: [3.0, 2.0, 1.0, 1.0, 0.0, 2.0]) * SMLLMatrix(rows: 3, columns: 2, values: [1.0, 2.0, 0.0, 1.0, 4.0, 0.0])
-        XCTAssertEqual(testMatrix[0,0], 7.0)
-        XCTAssertEqual(testMatrix[0,1], 8.0)
-        XCTAssertEqual(testMatrix[1,0], 9.0)
-        XCTAssertEqual(testMatrix[1,1], 2.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 2, values:
+            [7.0, 8.0,
+            9.0, 2.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     func testMatrixMultiplicationPerformance() {
@@ -216,12 +191,10 @@ class SMLLMatrixTests: XCTestCase {
     
     func testHadamadProduct() {
         let testMatrix = SMLLMatrix(rows: 2, columns: 3, sequence: true) ○ SMLLMatrix(rows: 2, columns: 3, sequence: true)
-        XCTAssertEqual(testMatrix[0,0], 1.0)
-        XCTAssertEqual(testMatrix[0,1], 4.0)
-        XCTAssertEqual(testMatrix[0,2], 9.0)
-        XCTAssertEqual(testMatrix[1,0], 16.0)
-        XCTAssertEqual(testMatrix[1,1], 25.0)
-        XCTAssertEqual(testMatrix[1,2], 36.0)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [1.0, 4.0, 9.0,
+            16.0, 25.0, 36.0])
+        XCTAssertEqual(testMatrix, checkMatrix)
     }
     
     func testHadamadProductPerformance() {
