@@ -18,7 +18,53 @@
 		39427BD51CEF5F5200663923 /* train-images.idx3-ubyte in Resources */ = {isa = PBXBuildFile; fileRef = 39427BD41CEF5F5200663923 /* train-images.idx3-ubyte */; };
 		39427BD71CEF5FAA00663923 /* MNISTDatasetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39427BD61CEF5FAA00663923 /* MNISTDatasetLoader.swift */; };
 		39427BD91CEF6DD800663923 /* MNISTDigitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39427BD81CEF6DD800663923 /* MNISTDigitView.swift */; };
+		39D5D56F1D0197870093CDC5 /* SwiftMachineLearningLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39D5D56E1D0197730093CDC5 /* SwiftMachineLearningLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		39D5D5691D0197730093CDC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 394500111CEA097400532153;
+			remoteInfo = "SwiftMachineLearningLibrary Mac";
+		};
+		39D5D56B1D0197730093CDC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3945001B1CEA097400532153;
+			remoteInfo = SwiftMachineLearningLibraryTests;
+		};
+		39D5D56D1D0197730093CDC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3960DB491D018B45004A5349;
+			remoteInfo = "SwiftMachineLearningLibrary iOS";
+		};
+		39D5D5701D01978E0093CDC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3960DB481D018B45004A5349;
+			remoteInfo = "SwiftMachineLearningLibrary iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3960DB5A1D0192D1004A5349 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				39D5D56F1D0197870093CDC5 /* SwiftMachineLearningLibrary.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		39427BB81CEF5E4000663923 /* MNISTExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MNISTExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +80,7 @@
 		39427BD41CEF5F5200663923 /* train-images.idx3-ubyte */ = {isa = PBXFileReference; lastKnownFileType = file; path = "train-images.idx3-ubyte"; sourceTree = "<group>"; };
 		39427BD61CEF5FAA00663923 /* MNISTDatasetLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNISTDatasetLoader.swift; sourceTree = "<group>"; };
 		39427BD81CEF6DD800663923 /* MNISTDigitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNISTDigitView.swift; sourceTree = "<group>"; };
+		39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMachineLearningLibrary.xcodeproj; path = ../../SwiftMachineLearningLibrary/SwiftMachineLearningLibrary.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +99,7 @@
 			children = (
 				39427BBA1CEF5E4000663923 /* MNISTExample */,
 				39427BB91CEF5E4000663923 /* Products */,
+				39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +138,16 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		39D5D5641D0197730093CDC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39D5D56A1D0197730093CDC5 /* SwiftMachineLearningLibrary.framework */,
+				39D5D56C1D0197730093CDC5 /* SwiftMachineLearningLibraryTests.xctest */,
+				39D5D56E1D0197730093CDC5 /* SwiftMachineLearningLibrary.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -100,10 +158,12 @@
 				39427BB41CEF5E3F00663923 /* Sources */,
 				39427BB51CEF5E3F00663923 /* Frameworks */,
 				39427BB61CEF5E3F00663923 /* Resources */,
+				3960DB5A1D0192D1004A5349 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				39D5D5711D01978E0093CDC5 /* PBXTargetDependency */,
 			);
 			name = MNISTExample;
 			productName = MNISTExample;
@@ -136,12 +196,42 @@
 			mainGroup = 39427BAF1CEF5E3F00663923;
 			productRefGroup = 39427BB91CEF5E4000663923 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 39D5D5641D0197730093CDC5 /* Products */;
+					ProjectRef = 39D5D5631D0197730093CDC5 /* SwiftMachineLearningLibrary.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				39427BB71CEF5E3F00663923 /* MNISTExample */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		39D5D56A1D0197730093CDC5 /* SwiftMachineLearningLibrary.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftMachineLearningLibrary.framework;
+			remoteRef = 39D5D5691D0197730093CDC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		39D5D56C1D0197730093CDC5 /* SwiftMachineLearningLibraryTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftMachineLearningLibraryTests.xctest;
+			remoteRef = 39D5D56B1D0197730093CDC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		39D5D56E1D0197730093CDC5 /* SwiftMachineLearningLibrary.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftMachineLearningLibrary.framework;
+			remoteRef = 39D5D56D1D0197730093CDC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		39427BB61CEF5E3F00663923 /* Resources */ = {
@@ -173,6 +263,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		39D5D5711D01978E0093CDC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftMachineLearningLibrary iOS";
+			targetProxy = 39D5D5701D01978E0093CDC5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		39427BBF1CEF5E4000663923 /* Main.storyboard */ = {
@@ -283,6 +381,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MNISTExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.felixopolka.MNISTExample;
@@ -294,6 +397,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MNISTExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.felixopolka.MNISTExample;

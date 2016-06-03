@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftMachineLearningLibrary
 
 class ViewController: UIViewController {
     @IBOutlet weak var digitView: MNISTDigitView!
@@ -21,6 +22,8 @@ class ViewController: UIViewController {
         if let labelURL = labelURL, let imageURL = imageURL, let dataSet = MNISTDatasetLoader.loadDatasetFromLabelFileURL(labelURL, imageFileURL: imageURL) {
             digitView.setImageContent(dataSet[500].pixelData, withDimension: 28)
         }
+        
+        _ = SMLLFeedforwardNeuralNetwork(layerSizes: 748, 30, 10)
         
     }
 
