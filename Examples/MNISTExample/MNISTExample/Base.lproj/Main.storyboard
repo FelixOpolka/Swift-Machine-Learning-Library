@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MNISTExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nff-iI-80g" customClass="MNISTDigitView" customModule="MNISTExample" customModuleProvider="target">
+                                <rect key="frame" x="20" y="20" width="560" height="560"/>
+                                <color key="backgroundColor" red="0.94117647059999998" green="0.81176470590000005" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Nff-iI-80g" secondAttribute="height" multiplier="1:1" id="XKL-8e-4HW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Nff-iI-80g" secondAttribute="bottom" priority="750" id="2be-vr-Pai"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2eS-UG-Iik"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nff-iI-80g" secondAttribute="trailing" priority="750" id="7xA-AQ-tiV"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Cq1-zZ-VbT"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" priority="750" id="JLc-qK-f69"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" priority="750" id="Nnv-Ki-yxe"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Qlu-sX-wmE"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Nff-iI-80g" secondAttribute="bottom" id="d1a-Ji-NNl"/>
+                            <constraint firstItem="Nff-iI-80g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lZp-43-AJM"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Nff-iI-80g" secondAttribute="trailing" id="xFD-Vn-wAf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="digitView" destination="Nff-iI-80g" id="4JD-cF-Tsc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
