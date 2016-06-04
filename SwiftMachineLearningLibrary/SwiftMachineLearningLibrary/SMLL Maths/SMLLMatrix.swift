@@ -182,6 +182,18 @@ public struct SMLLMatrix: CustomStringConvertible {
     
     
     /**
+     Returns the index of the maximum element inside the matrix.
+     */
+    public func maxIndex() -> (row: Int, column: Int) {
+        var maxIndex = vDSP_Length()
+        var maxValue = 0.0
+        vDSP_maxviD(elements, 1, &maxValue, &maxIndex, vDSP_Length(elements.count))
+        
+        return ((Int)(maxIndex) / columns, (Int)(maxIndex) % columns)
+    }
+    
+    
+    /**
      Returns a submatrix specified by an index rectangle.
      */
     public func submatrixFromRowStart (rowStart: Int, rowEnd: Int, columnStart: Int, columnEnd: Int) -> SMLLMatrix {

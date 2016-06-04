@@ -38,6 +38,21 @@ class SMLLMatrixTests: XCTestCase {
         }
     }
     
+    func testMaxIndex() {
+        let testMatrix = SMLLMatrix(rows: 2, columns: 3, values:
+            [0.03, 0.3, 1.003,
+            0.0002223, 2.299, 0.02])
+        XCTAssertEqual(testMatrix.maxIndex().row, 1)
+        XCTAssertEqual(testMatrix.maxIndex().column, 1)
+    }
+    
+    func testMaxIndexPerformance() {
+        let testMatrix = SMLLMatrix(rows: 900, columns: 1000, normalRandomValues: true)
+        self.measureBlock { // Un-Accelerated: 0.116
+            testMatrix.maxIndex()
+        }
+    }
+    
     func testSubmatrix() {
         let testMatrix = SMLLMatrix(rows: 3, columns: 3, sequence: true).submatrixFromRowStart(0, rowEnd: 1, columnStart: 1, columnEnd: 2)
         let checkMatrix = SMLLMatrix(rows: 2, columns: 2, values:
