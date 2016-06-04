@@ -79,12 +79,50 @@ public class SMLLFeedforwardNeuralNetwork {
     
     
     /**
+     Trains the network using a given set of training samples using stochastic gradient descent.
+     - Parameters:
+        - trainingSet: Set of training samples used for stochastic gradient descent.
+        - numberOfEpochs: Number of training iterations over the whole training set.
+        - learningRate: The learningRate to be used for gradient descent.
+        - testSet: Optionally provide a test set to log the performance of the network on this set after each epoch.
+     */
+    public func train(trainingSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], numberOfEpochs: Int, miniBatchSize: Int, learningRate: Double, testSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]? = nil) {
+        var currentTrainingSet = trainingSet
+        for epochIndex in 0..<numberOfEpochs {
+            // Train the network with one iteration over the whole training set in portions of one miniBatchSize
+            currentTrainingSet.shuffleInPlace()
+            for miniBatchIndex in 0 ..< ((trainingSet.count / miniBatchSize) - 1) {
+                let startIndex = miniBatchIndex * 10
+                let endIndex = (miniBatchIndex+1) * 10
+                let miniBatch = Array(trainingSet[startIndex ..< endIndex])
+                
+                updateMiniBatch(miniBatch, learningRate: learningRate)
+            }
+            
+            // If a test set was provided, test how well the network performs on these samples
+            if let testSet = testSet {
+                var correctlyClassifiedCount = 0
+                for testSample in testSet {
+                    let output = feedforward(testSample.input)
+                    let outputMaxIndex = output.maxIndex()
+                    let desiredOutputMaxIndex = testSample.desiredOutput.maxIndex()
+                    if outputMaxIndex == desiredOutputMaxIndex {
+                        correctlyClassifiedCount += 1
+                    }
+                }
+                print("Epoch \(epochIndex): \(correctlyClassifiedCount)/\(testSet.count)")
+            }
+        }
+    }
+    
+    
+    /**
      Updates the networks weights and biases using gradient descent. Calculates the gradients of the network's weights and biases via backpropagation using a given set of training examples.
      - Parameters:
      - miniBatch: A tuple containing the `input` to feed through the network and the `desired output` of the network corresponding to the given input.
      - learningRate: The learning rate to be used for gradient descent.
      */
-    public func updateMiniBatch(miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
+    private func updateMiniBatch(miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
         guard let firstTrainingExample = miniBatch.first else {return}
         var totalGradients = backpropagate(firstTrainingExample.input, desiredOutput: firstTrainingExample.desiredOutput)
         for trainingExampleIndex in 1..<miniBatch.count {
@@ -175,4 +213,21 @@ public class SMLLFeedforwardNeuralNetwork {
     }
     
     
+}
+
+
+extension MutableCollectionType where Index == Int {
+    /**
+     Performs an in-place, uniform Fisher-Yates shuffle.
+     */
+    mutating func shuffleInPlace() {
+        // Collections with one element or less cannot be shuffled
+        if count <= 1 { return }
+        
+        for i in 0..<count-1 {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            guard i != j else { continue }
+            swap(&self[i], &self[j])
+        }
+    }
 }
