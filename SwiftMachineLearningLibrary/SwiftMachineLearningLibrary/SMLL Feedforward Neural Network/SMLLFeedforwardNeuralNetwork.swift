@@ -150,7 +150,7 @@ public class SMLLFeedforwardNeuralNetwork {
     
     
     private func sigmoidPrime(z: SMLLMatrix) -> SMLLMatrix {
-        return sigmoid(z) * (1.0 - sigmoid(z))
+        return sigmoid(z) ○ (1.0 - sigmoid(z))
     }
     
     
