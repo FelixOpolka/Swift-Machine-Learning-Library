@@ -27,13 +27,6 @@
 			remoteGlobalIDString = 394500101CEA097400532153;
 			remoteInfo = SwiftMachineLearningLibrary;
 		};
-		39D5D5A61D01EADA0093CDC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 394500081CEA097400532153 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3960DB481D018B45004A5349;
-			remoteInfo = "SwiftMachineLearningLibrary iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -202,7 +195,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				39D5D5A71D01EADA0093CDC5 /* PBXTargetDependency */,
 				3945001E1CEA097400532153 /* PBXTargetDependency */,
 			);
 			name = SwiftMachineLearningLibraryTests;
@@ -328,11 +320,6 @@
 			isa = PBXTargetDependency;
 			target = 394500101CEA097400532153 /* SwiftMachineLearningLibrary Mac */;
 			targetProxy = 3945001D1CEA097400532153 /* PBXContainerItemProxy */;
-		};
-		39D5D5A71D01EADA0093CDC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3960DB481D018B45004A5349 /* SwiftMachineLearningLibrary iOS */;
-			targetProxy = 39D5D5A61D01EADA0093CDC5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
