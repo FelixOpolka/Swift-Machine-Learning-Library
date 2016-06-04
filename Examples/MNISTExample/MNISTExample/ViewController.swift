@@ -15,23 +15,51 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let labelURL = NSBundle.mainBundle().URLForResource("train-labels.idx1-ubyte", withExtension: nil)
-        //let imageURL = NSBundle.mainBundle().URLForResource("train-images.idx3-ubyte", withExtension: nil)
-        let labelURL = NSBundle.mainBundle().URLForResource("t10k-labels.idx1-ubyte", withExtension: nil)
-        let imageURL = NSBundle.mainBundle().URLForResource("t10k-images.idx3-ubyte", withExtension: nil)
-        if let labelURL = labelURL, let imageURL = imageURL, let dataSet = MNISTDatasetLoader.loadDatasetFromLabelFileURL(labelURL, imageFileURL: imageURL) {
-            digitView.setImageContent(dataSet[500].pixelData, withDimension: 28)
+        let trainingSetLabelURL = NSBundle.mainBundle().URLForResource("train-labels.idx1-ubyte", withExtension: nil)
+        let trainingSetImageURL = NSBundle.mainBundle().URLForResource("train-images.idx3-ubyte", withExtension: nil)
+        let testSetLabelURL = NSBundle.mainBundle().URLForResource("t10k-labels.idx1-ubyte", withExtension: nil)
+        let testSetImageURL = NSBundle.mainBundle().URLForResource("t10k-images.idx3-ubyte", withExtension: nil)
+        
+        // Load the data sets from the mnist files
+        print("Load data sets...")
+        if let trainingSetLabelURL = trainingSetLabelURL, let trainingSetImageURL = trainingSetImageURL,
+            let testSetLabelURL = testSetLabelURL, let testSetImageURL = testSetImageURL,
+            let trainingSetRaw = MNISTDatasetLoader.loadDatasetFromLabelFileURL(trainingSetLabelURL, imageFileURL: trainingSetImageURL),
+            let testSetRaw = MNISTDatasetLoader.loadDatasetFromLabelFileURL(testSetLabelURL, imageFileURL: testSetImageURL) {
+            print("Data sets successfully loaded")
+            digitView.setImageContent(testSetRaw[8].pixelData, withDimension: 28)
+            
+            // Convert data set to a SMLL-compatable format
+            print("Convert data sets to SMLL format...")
+            let trainingSet = convertToSMLLFormat(trainingSetRaw)
+            let testSet = convertToSMLLFormat(testSetRaw)
+            print("Data sets successfully converted")
+            
+            // Train the network using SGD
+            print("Train network...")
+            let fnn = SMLLFeedforwardNeuralNetwork(layerSizes: 784, 35, 10)
+            fnn.train(trainingSet, numberOfEpochs: 50, miniBatchSize: 10, learningRate: 0.25, testSet: testSet)
+            print("Training done")
         }
-        
-        _ = SMLLFeedforwardNeuralNetwork(layerSizes: 748, 30, 10)
-        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    /**
+     Converts a set of MNIST-samples to the SMLL format consisting of SMLLMatrices to be used for training a SMLL-Network.
+     */
+    private func convertToSMLLFormat(rawSet: [(pixelData: [Int], label: Int)]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] {
+        var set = [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]()
+        for sample in rawSet {
+            let input = SMLLMatrix(shape: .ColumnVector, values: sample.pixelData.map { (Double)($0)/255.0 })
+            let output = SMLLMatrix(shape: .ColumnVector, values: 0.stride(to: 10, by: 1).map({ $0 == sample.label ? 1.0 : 0.0 }))
+            set.append((input, output))
+        }
+        return set
+    }
 
 
 }
-
