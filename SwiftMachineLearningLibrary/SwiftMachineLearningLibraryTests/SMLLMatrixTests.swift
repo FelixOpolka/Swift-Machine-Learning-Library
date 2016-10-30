@@ -33,7 +33,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testTransposePerformance() {
         let testMatrix = SMLLMatrix(rows: 1_000, columns: 10_000, sequence: true)
-        self.measureBlock {
+        self.measure {
             testMatrix.transpose()
         }
     }
@@ -48,7 +48,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testMaxIndexPerformance() {
         let testMatrix = SMLLMatrix(rows: 900, columns: 1000, normalRandomValues: true)
-        self.measureBlock { // Un-Accelerated: 0.116
+        self.measure { // Un-Accelerated: 0.116
             testMatrix.maxIndex()
         }
     }
@@ -62,7 +62,7 @@ class SMLLMatrixTests: XCTestCase {
     }
     
     func testSubmatrixPerformance() {
-        self.measureBlock {
+        self.measure {
             _ = SMLLMatrix(rows: 1_000, columns: 1_000, sequence: true).submatrixFromRowStart(300, rowEnd: 999, columnStart: 1, columnEnd: 600)
         }
     }
@@ -79,7 +79,7 @@ class SMLLMatrixTests: XCTestCase {
     func testAdditionPerformance() {
         let leftMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
         let rightMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock { // Un-Accelerated: 3.125
+        self.measure { // Un-Accelerated: 3.125
             _ = leftMatrix + rightMatrix
         }
     }
@@ -96,7 +96,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMatrixAdditionPerformance() {
         let testMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock {
+        self.measure {
             _ = 11.0 + testMatrix
         }
     }
@@ -113,7 +113,7 @@ class SMLLMatrixTests: XCTestCase {
     func testSubtractionPerformance() {
         let leftMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
         let rightMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock {
+        self.measure {
             _ = leftMatrix - rightMatrix
         }
     }
@@ -129,7 +129,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testNegationPerformance() {
         let testMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock {
+        self.measure {
             _ = -testMatrix
         }
     }
@@ -146,7 +146,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMultiplicationPerformance() {
         let testMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock { // Un-Accelerated: 0.244
+        self.measure { // Un-Accelerated: 0.244
             _ = testMatrix * 2.0
         }
     }
@@ -163,7 +163,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testMatrixScalarDivisionPerformance() {
         let testMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock { // Un-Accelerated: 0.243
+        self.measure { // Un-Accelerated: 0.243
             _ = testMatrix / 2.0
         }
     }
@@ -181,7 +181,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testScalarMatrixDivisionPerformance() {
         let testMatrix = SMLLMatrix(rows: 3_000, columns: 4_000, sequence: true)
-        self.measureBlock {
+        self.measure {
             _ = 50.0 / testMatrix
         }
     }
@@ -198,7 +198,7 @@ class SMLLMatrixTests: XCTestCase {
     func testMatrixMultiplicationPerformance() {
         let leftTestMatrix = SMLLMatrix(rows: 200, columns: 100, sequence: true)
         let rightTestMatrix = SMLLMatrix(rows: 100, columns: 50, sequence: true)
-        self.measureBlock( {    // Un-Accelerated: 0.463
+        self.measure( {    // Un-Accelerated: 0.463
             leftTestMatrix * rightTestMatrix
         })
     }
@@ -215,7 +215,7 @@ class SMLLMatrixTests: XCTestCase {
     func testHadamadProductPerformance() {
         let leftMatrix = SMLLMatrix(rows: 1_000, columns: 800, sequence: true)
         let rightMatrix = SMLLMatrix(rows: 1_000, columns: 800, sequence: true)
-        self.measureBlock { // Un-Accelerated: 0.030
+        self.measure { // Un-Accelerated: 0.030
             _ = leftMatrix ○ rightMatrix
         }
         
@@ -232,7 +232,7 @@ class SMLLMatrixTests: XCTestCase {
     
     func testExponentialPerformance() {
         let testMatrix = SMLLMatrix(rows: 1_000, columns: 800, sequence: true)
-        self.measureBlock {
+        self.measure {
             _ = exp(testMatrix)
         }
         

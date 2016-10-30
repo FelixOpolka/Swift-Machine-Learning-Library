@@ -8,12 +8,12 @@
 import Foundation
 import Accelerate
 
-public enum SMLLMatrixError: ErrorType {
-    case InvalidIOData(dataIdentifier: String)
+public enum SMLLMatrixError: Error {
+    case invalidIOData(dataIdentifier: String)
 }
 
 public enum SMLLMatrixShape {
-    case ColumnVector, RowVector
+    case columnVector, rowVector
 }
 
 public struct SMLLMatrix: CustomStringConvertible {
@@ -27,7 +27,7 @@ public struct SMLLMatrix: CustomStringConvertible {
         // Implementation adapted from github.com/mattt/Surge/blob/master/Source/Matrix.swift on 16/May/2016
         var description = ""
         for i in 0..<rows {
-            let contents = (0..<columns).map{"\(self[i, $0])"}.joinWithSeparator("\t")
+            let contents = (0..<columns).map{"\(self[i, $0])"}.joined(separator: "\t")
             switch (i, rows) {
             case (0, 1):
                 description += "(\t\(contents)\t)"
@@ -52,7 +52,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     public init(rows: Int, columns: Int, repeatedValue: Double = 0.0) {
         self.rows = rows
         self.columns = columns
-        elements = Array (count: rows*columns, repeatedValue: repeatedValue)
+        elements = Array (repeating: repeatedValue, count: rows*columns)
     }
     
     
@@ -72,7 +72,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     public init(rows: Int, columns: Int, sequence: Bool) {
         self.rows = rows
         self.columns = columns
-        elements = Array (count: rows*columns, repeatedValue: 0.0)
+        elements = Array (repeating: 0.0, count: rows*columns)
         for rowIndex in 0..<rows {
             for columnIndex in 0..<columns {
                 elements[(rowIndex * columns) + columnIndex] = (Double)((rowIndex * columns) + columnIndex) + 1.0
@@ -98,7 +98,7 @@ public struct SMLLMatrix: CustomStringConvertible {
      Initializes a matrix of the given shape (column or row vector) with a secondary dimension of `numberOfElements` and set all elements to `repeatedValue` which defaults to `0.0`.
      */
     public init(shape: SMLLMatrixShape, numberOfElements: Int, repeatedValue: Double = 0.0) {
-        if shape == .ColumnVector {
+        if shape == .columnVector {
             self.rows = numberOfElements
             self.columns = 1
         } else {
@@ -116,7 +116,7 @@ public struct SMLLMatrix: CustomStringConvertible {
      Initializes a matrix of the given shape (column or row vector) with the elements stored in `values`.
      */
     public init(shape: SMLLMatrixShape, values: [Double]) {
-        if shape == .ColumnVector {
+        if shape == .columnVector {
             self.rows = values.count
             self.columns = 1
         } else {
@@ -133,7 +133,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     public init(mirrorShapeOf shapeModel: SMLLMatrix, repeatedValue: Double = 0.0) {
         self.rows = shapeModel.rows
         self.columns = shapeModel.columns
-        elements = Array(count: rows*columns, repeatedValue: repeatedValue)
+        elements = Array(repeating: repeatedValue, count: rows*columns)
     }
     
     
@@ -141,17 +141,17 @@ public struct SMLLMatrix: CustomStringConvertible {
      Initializes a matrix from a given storage dictionary.
      */
     public init(ioRepresentation: NSDictionary) throws {
-        if let rows = (ioRepresentation.valueForKey("Rows") as? Int) {
+        if let rows = (ioRepresentation.value(forKey: "Rows") as? Int) {
             self.rows = rows
-        } else { throw SMLLMatrixError.InvalidIOData(dataIdentifier: "Rows") }
+        } else { throw SMLLMatrixError.invalidIOData(dataIdentifier: "Rows") }
         
-        if let columns = (ioRepresentation.valueForKey("Columns") as? Int) {
+        if let columns = (ioRepresentation.value(forKey: "Columns") as? Int) {
             self.columns = columns
-        } else { throw SMLLMatrixError.InvalidIOData(dataIdentifier: "Columns") }
+        } else { throw SMLLMatrixError.invalidIOData(dataIdentifier: "Columns") }
         
-        if let elements = (ioRepresentation.valueForKey("Elements") as? [Double]) {
+        if let elements = (ioRepresentation.value(forKey: "Elements") as? [Double]) {
             self.elements = elements
-        } else { throw SMLLMatrixError.InvalidIOData(dataIdentifier: "Elements") }
+        } else { throw SMLLMatrixError.invalidIOData(dataIdentifier: "Elements") }
     }
     
     
@@ -176,7 +176,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     }
     
     
-    public func transposeValueForRow (row: Int, column: Int) -> Double {
+    public func transposeValueForRow (_ row: Int, column: Int) -> Double {
         return self[column, row]
     }
     
@@ -196,13 +196,13 @@ public struct SMLLMatrix: CustomStringConvertible {
     /**
      Returns a submatrix specified by an index rectangle.
      */
-    public func submatrixFromRowStart (rowStart: Int, rowEnd: Int, columnStart: Int, columnEnd: Int) -> SMLLMatrix {
+    public func submatrixFromRowStart (_ rowStart: Int, rowEnd: Int, columnStart: Int, columnEnd: Int) -> SMLLMatrix {
         assert(rowStart < rowEnd, "Invalid row index range")
         assert(columnStart < columnEnd, "Invalid column index range")
         var values: [Double] = [Double]();
         // Copy parts of the existing matrix row-wise into the new one
         for rowIndex in rowStart ... rowEnd {
-            values.appendContentsOf(elements[(rowIndex*columns+columnStart)...(rowIndex*columns+columnEnd)])
+            values.append(contentsOf: elements[(rowIndex*columns+columnStart)...(rowIndex*columns+columnEnd)])
         }
         return SMLLMatrix(rows: (rowEnd-rowStart+1), columns: (columnEnd-columnStart+1), values: values)
     }
@@ -210,12 +210,12 @@ public struct SMLLMatrix: CustomStringConvertible {
     
     // - Private methods
     
-    private func indexIsValidForRow (row: Int, column: Int) -> Bool {
+    fileprivate func indexIsValidForRow (_ row: Int, column: Int) -> Bool {
         return row >= 0 && row < rows && column >= 0 && column < columns
     }
     
     
-    private func normalRandomValue () -> Double {
+    fileprivate func normalRandomValue () -> Double {
         let u = (Double)(arc4random() % 1000 + 1) / 1000.0
         let v = (Double)(arc4random() % 1000 + 1) / 1000.0
         let random = sqrt( -2 * log(u) ) * cos( 2 * M_PI * v )

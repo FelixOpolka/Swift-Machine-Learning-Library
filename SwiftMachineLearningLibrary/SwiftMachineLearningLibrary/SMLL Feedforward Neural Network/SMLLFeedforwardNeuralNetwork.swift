@@ -8,20 +8,20 @@
 
 import Foundation
 
-public enum SMLLIOError: ErrorType {
-    case FileNotFound
-    case InvalidIOData(dataIdentifier: String)
+public enum SMLLIOError: Error {
+    case fileNotFound
+    case invalidIOData(dataIdentifier: String)
 }
 
-public class SMLLFeedforwardNeuralNetwork {
+open class SMLLFeedforwardNeuralNetwork {
     /// An array of weight-matrices
-    private var weights: [SMLLMatrix]
+    fileprivate var weights: [SMLLMatrix]
     /// An array of bias-vectors
-    private var biases: [SMLLMatrix]
+    fileprivate var biases: [SMLLMatrix]
     /// The number of layers of the network (including input-layer, hidden-layer(s), output-layer)
-    public let numberOfLayers: Int
+    open let numberOfLayers: Int
     /// The number of neurons in each layer
-    public let layerSizes: [Int]
+    open let layerSizes: [Int]
     
     
     /**
@@ -41,23 +41,23 @@ public class SMLLFeedforwardNeuralNetwork {
     /**
      Initializes the FNN from a given storage representation.
      */
-    public init (fileURL: NSURL) throws {
-        if let  storageRepresentationDictionary = NSDictionary(contentsOfURL: fileURL) {
-            if let layerSizes = ( storageRepresentationDictionary.valueForKey("LayerSizes") as? [Int]) {
+    public init (fileURL: URL) throws {
+        if let  storageRepresentationDictionary = NSDictionary(contentsOf: fileURL) {
+            if let layerSizes = ( storageRepresentationDictionary.value(forKey: "LayerSizes") as? [Int]) {
                 self.layerSizes = layerSizes
-            } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "LayerSizes") }
+            } else { throw SMLLIOError.invalidIOData(dataIdentifier: "LayerSizes") }
             
             self.numberOfLayers = self.layerSizes.count
             
-            if let weights = ( storageRepresentationDictionary.valueForKey("Weights") as? [NSDictionary]) {
+            if let weights = ( storageRepresentationDictionary.value(forKey: "Weights") as? [NSDictionary]) {
                 self.weights = try weights.map({try SMLLMatrix(ioRepresentation: $0)})
-            } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "Weights") }
+            } else { throw SMLLIOError.invalidIOData(dataIdentifier: "Weights") }
             
-            if let biases = ( storageRepresentationDictionary.valueForKey("Biases") as? [NSDictionary]) {
+            if let biases = ( storageRepresentationDictionary.value(forKey: "Biases") as? [NSDictionary]) {
                 self.biases = try biases.map({try SMLLMatrix(ioRepresentation: $0)})
-            } else { throw SMLLIOError.InvalidIOData(dataIdentifier: "Biases") }
+            } else { throw SMLLIOError.invalidIOData(dataIdentifier: "Biases") }
         }
-        throw SMLLIOError.FileNotFound
+        throw SMLLIOError.fileNotFound
     }
     
     
@@ -67,7 +67,7 @@ public class SMLLFeedforwardNeuralNetwork {
      - input: The input to feed through the network. Must be a column vector matching the number of input-neurons of the network.
      - Returns: The output of network. A column vector matching the number of output-neurons of the network.
      */
-    public func feedforward(input: SMLLMatrix) -> SMLLMatrix {
+    open func feedforward(_ input: SMLLMatrix) -> SMLLMatrix {
         assert(input.columns == 1, "Feedforward-input must be a column vector.")
         assert(input.rows == layerSizes.first!, "Feedforward-input must match number of input-neurons.")
         var output: SMLLMatrix = input
@@ -86,11 +86,11 @@ public class SMLLFeedforwardNeuralNetwork {
         - learningRate: The learningRate to be used for gradient descent.
         - testSet: Optionally provide a test set to log the performance of the network on this set after each epoch.
      */
-    public func train(trainingSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], numberOfEpochs: Int, miniBatchSize: Int, learningRate: Double, testSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]? = nil) {
+    open func train(_ trainingSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], numberOfEpochs: Int, miniBatchSize: Int, learningRate: Double, testSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]? = nil) {
         var currentTrainingSet = trainingSet
         for epochIndex in 0..<numberOfEpochs {
             // Train the network with one iteration over the whole training set in portions of one miniBatchSize
-            currentTrainingSet.shuffleInPlace()
+            currentTrainingSet.shuffle()
             for miniBatchIndex in 0 ..< ((trainingSet.count / miniBatchSize) - 1) {
                 let startIndex = miniBatchIndex * 10
                 let endIndex = (miniBatchIndex+1) * 10
@@ -122,7 +122,7 @@ public class SMLLFeedforwardNeuralNetwork {
      - miniBatch: A tuple containing the `input` to feed through the network and the `desired output` of the network corresponding to the given input.
      - learningRate: The learning rate to be used for gradient descent.
      */
-    private func updateMiniBatch(miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
+    fileprivate func updateMiniBatch(_ miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
         guard let firstTrainingExample = miniBatch.first else {return}
         var totalGradients = backpropagate(firstTrainingExample.input, desiredOutput: firstTrainingExample.desiredOutput)
         for trainingExampleIndex in 1..<miniBatch.count {
@@ -149,7 +149,7 @@ public class SMLLFeedforwardNeuralNetwork {
      - `biasesGradients`: An array of column vectors with each one matching the number of neurons in one of the network's layers (Starting with first. Each vector contains the gradient for every biase in the corresponding layer.
      - `weightsGradients`: An array of matrices with each one matching the number of weights between two of the network's layers (Starting between the first and second layer). Each matrix contains the gradient for every weight between the two corresponding layers.
      */
-    private func backpropagate(input: SMLLMatrix, desiredOutput: SMLLMatrix) -> (biasesGradients: [SMLLMatrix], weightsGradients: [SMLLMatrix]) {
+    fileprivate func backpropagate(_ input: SMLLMatrix, desiredOutput: SMLLMatrix) -> (biasesGradients: [SMLLMatrix], weightsGradients: [SMLLMatrix]) {
         var weightsGradients = [SMLLMatrix]()
         var biasesGradients = [SMLLMatrix]()
         
@@ -172,34 +172,34 @@ public class SMLLFeedforwardNeuralNetwork {
         weightsGradients.append(currentError * outputs[outputs.count-2].transpose())
         
         // Calculate the error in previous layers
-        for layerIndex in (0 ... (weights.count-2)).reverse() {
+        for layerIndex in (0 ... (weights.count-2)).reversed() {
             currentError = (weights[layerIndex+1].transpose() * currentError) ○ sigmoidPrime(weightedSums[layerIndex])
-            biasesGradients.insert(currentError, atIndex: 0)
-            weightsGradients.insert(currentError * outputs[layerIndex].transpose(), atIndex: 0)
+            biasesGradients.insert(currentError, at: 0)
+            weightsGradients.insert(currentError * outputs[layerIndex].transpose(), at: 0)
         }
         
         return (biasesGradients, weightsGradients)
     }
     
     
-    private func sigmoid(z: SMLLMatrix) -> SMLLMatrix {
+    fileprivate func sigmoid(_ z: SMLLMatrix) -> SMLLMatrix {
         return 1.0 / (1.0 + exp(-z))
     }
     
     
-    private func sigmoidPrime(z: SMLLMatrix) -> SMLLMatrix {
+    fileprivate func sigmoidPrime(_ z: SMLLMatrix) -> SMLLMatrix {
         return sigmoid(z) ○ (1.0 - sigmoid(z))
     }
     
     
-    private func costDerivative(output: SMLLMatrix, desiredOutput: SMLLMatrix) -> SMLLMatrix {
+    fileprivate func costDerivative(_ output: SMLLMatrix, desiredOutput: SMLLMatrix) -> SMLLMatrix {
         return output - desiredOutput
     }
     
     
     // MARK: - Storage methods
     
-    public func writeToFile(fileURL: NSURL) {
+    open func writeToFile(_ fileURL: URL) {
         let weightsIORepresentation = NSArray(array: weights.map({$0.getIORepresentation()}))
         let biasesIORepresentation = NSArray(array: biases.map({$0.getIORepresentation()}))
         let layerSizesIORepresentation = NSArray(array: layerSizes)
@@ -209,23 +209,23 @@ public class SMLLFeedforwardNeuralNetwork {
          storageRepresentationDictionary.setValue(biasesIORepresentation, forKey: "Biases")
          storageRepresentationDictionary.setValue(layerSizesIORepresentation, forKey: "LayerSizes")
         
-        storageRepresentationDictionary.writeToURL(fileURL, atomically: true)
+        storageRepresentationDictionary.write(to: fileURL, atomically: true)
     }
     
     
 }
 
 
-extension MutableCollectionType where Index == Int {
+extension MutableCollection where Index == Int {
     /**
      Performs an in-place, uniform Fisher-Yates shuffle.
      */
-    mutating func shuffleInPlace() {
+    mutating func shuffle() {
         // Collections with one element or less cannot be shuffled
         if count <= 1 { return }
-        
-        for i in 0..<count-1 {
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+
+        for i in startIndex..<endIndex-1 {
+            let j = Int(arc4random_uniform(UInt32(endIndex - i))) + i
             guard i != j else { continue }
             swap(&self[i], &self[j])
         }

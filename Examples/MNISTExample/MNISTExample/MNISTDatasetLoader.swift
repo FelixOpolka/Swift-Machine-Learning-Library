@@ -17,11 +17,11 @@ class MNISTDatasetLoader {
         - imageFileURL: URL to MNIST-image-file containing the image data of each sample. Must correspond to the given label file.
      - Returns: An array of samples, each containg an array of pixel intensities (integers from 0 to 255) along with the correct digit/ label (integer from 0 to 9) represented by the image.
      */
-    static func loadDatasetFromLabelFileURL(labelFileURL: NSURL, imageFileURL: NSURL) -> [(pixelData: [Int], label: Int)]? {
-        let labelsData = NSData(contentsOfURL: labelFileURL)
-        let imagesData = NSData(contentsOfURL: imageFileURL)
+    static func loadDatasetFromLabelFileURL(_ labelFileURL: URL, imageFileURL: URL) -> [(pixelData: [Int], label: Int)]? {
+        let labelsData = try? Data(contentsOf: labelFileURL)
+        let imagesData = try? Data(contentsOf: imageFileURL)
         
-        if let labelsData = labelsData, imagesData = imagesData {
+        if let labelsData = labelsData, let imagesData = imagesData {
             var samples = [(pixelData: [Int], label: Int)]()
             
             var numberOfItems: UInt32 = readIntegerFromData(imagesData, location: 4)
@@ -58,9 +58,9 @@ class MNISTDatasetLoader {
     /**
      Reads an integer value from an NSData-object starting at a given location. Uses the host's byte order.
      */
-    private static func readIntegerFromData<T: IntegerType>(data: NSData, location: Int) -> T {
+    fileprivate static func readIntegerFromData<T: Integer>(_ data: Data, location: Int) -> T {
         var value: T = 0
-        data.getBytes(&value, range: NSRange(location: location, length: sizeof(T)))
+        (data as NSData).getBytes(&value, range: NSRange(location: location, length: MemoryLayout<T>.size))
         
         return value
     }

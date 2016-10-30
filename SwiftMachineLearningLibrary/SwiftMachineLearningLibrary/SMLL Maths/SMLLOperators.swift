@@ -112,7 +112,7 @@ public func * (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix {
 /**
  Hadamad-Product of two matrices
  */
-infix operator ○ {associativity left precedence 160}
+infix operator ○ : MultiplicationPrecedence
 public func ○ (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix {
     assert(leftMatrix.rows == rightMatrix.rows && leftMatrix.columns == rightMatrix.columns, "Trying to calculate the Hadamad product of two matrices of different sizes")
     var result = SMLLMatrix(rows: leftMatrix.rows, columns: leftMatrix.columns)
@@ -124,7 +124,7 @@ public func ○ (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix 
 /**
  The element-wise exponential of a given matrix
  */
-public func exp(matrix: SMLLMatrix) -> SMLLMatrix {
+public func exp(_ matrix: SMLLMatrix) -> SMLLMatrix {
     var result = SMLLMatrix(rows: matrix.rows, columns: matrix.columns)
     vvexp(&result.elements, matrix.elements, [Int32(result.elements.count)])
     return result

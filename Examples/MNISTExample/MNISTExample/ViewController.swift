@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let trainingSetLabelURL = NSBundle.mainBundle().URLForResource("train-labels.idx1-ubyte", withExtension: nil)
-        let trainingSetImageURL = NSBundle.mainBundle().URLForResource("train-images.idx3-ubyte", withExtension: nil)
-        let testSetLabelURL = NSBundle.mainBundle().URLForResource("t10k-labels.idx1-ubyte", withExtension: nil)
-        let testSetImageURL = NSBundle.mainBundle().URLForResource("t10k-images.idx3-ubyte", withExtension: nil)
+        let trainingSetLabelURL = Bundle.main.url(forResource: "train-labels.idx1-ubyte", withExtension: nil)
+        let trainingSetImageURL = Bundle.main.url(forResource: "train-images.idx3-ubyte", withExtension: nil)
+        let testSetLabelURL = Bundle.main.url(forResource: "t10k-labels.idx1-ubyte", withExtension: nil)
+        let testSetImageURL = Bundle.main.url(forResource: "t10k-images.idx3-ubyte", withExtension: nil)
         
         // Load the data sets from the mnist files
         print("Load data sets...")
@@ -51,11 +51,11 @@ class ViewController: UIViewController {
     /**
      Converts a set of MNIST-samples to the SMLL format consisting of SMLLMatrices to be used for training a SMLL-Network.
      */
-    private func convertToSMLLFormat(rawSet: [(pixelData: [Int], label: Int)]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] {
+    fileprivate func convertToSMLLFormat(_ rawSet: [(pixelData: [Int], label: Int)]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] {
         var set = [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]()
         for sample in rawSet {
-            let input = SMLLMatrix(shape: .ColumnVector, values: sample.pixelData.map { (Double)($0)/255.0 })
-            let output = SMLLMatrix(shape: .ColumnVector, values: 0.stride(to: 10, by: 1).map({ $0 == sample.label ? 1.0 : 0.0 }))
+            let input = SMLLMatrix(shape: .columnVector, values: sample.pixelData.map { (Double)($0)/255.0 })
+            let output = SMLLMatrix(shape: .columnVector, values: stride(from: 0, to: 10, by: 1).map({ $0 == sample.label ? 1.0 : 0.0 }))
             set.append((input, output))
         }
         return set
