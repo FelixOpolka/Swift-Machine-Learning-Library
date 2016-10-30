@@ -11,3 +11,10 @@ The library bears a pretty fancy name which is by far not justified in its curre
   - [x] Matrix Library using SIMD (GPU accelerated) instructions via Apple's Accelerate framework
   - [x] Feedforward Neural Network trained using backpropagation
   - [ ] Convolutional Network
+
+## Examples
+
+For demonstrating the usage of the library, different kinds of example applications should be provided. The following projects are already implemented or planned to be added:
+
+  - [x] Recognition of handwritten digits using the MNIST-dataset (see [MNISTExample](https://github.com/FelixOpolka/Swift-Machine-Learning-Library/tree/master/Examples/MNISTExample))
+  - [ ] Handwriting-recognition on iOS
