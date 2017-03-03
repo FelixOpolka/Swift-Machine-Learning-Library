@@ -9,40 +9,91 @@
 import UIKit
 
 class EnterDigitsViewController: UIViewController {
+    
+    /// View for drawing the digit.
     @IBOutlet weak var digitDrawingView: DrawingView!
-    enum EdgePosition {
-        case Top
-        case Bottom
-        case Left
-        case Right
-    }
-    enum Orientation {
-        case Horizontal
-        case Vertical
-    }
+    
+    /// Array of UILabels which display for each digit the number of samples already added to the data set. The labels' tags each specify the digit the label corresponds to.
+    @IBOutlet var sampleCounterLabel: [UILabel]!
+    
+    /// Filename of the data set currently edited.
+    var dataSetFilename: String!
+    
+    /// The data set currently edited.
+    var digitsDataSet: DigitsDataSet!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        digitsDataSet = DigitsDataSet(fromFile: dataSetFilename)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearDrawingView))
+        
+        // Update sample counter labels for each digit to reflect existing sample counts.
+        sampleCounterLabel.forEach({label in
+            label.text = "\(digitsDataSet.sampleCount(forDigit: label.tag))"
+        })
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: - User interaction
+    
+    /**
+     Clears the current drawing.
+     */
     func clearDrawingView() {
         digitDrawingView.clearImage()
     }
     
+    
+    /**
+     Called when the user pressed one of the digit buttons for adding a new sample for the specified digit.
+     
+     The digit the button represents is stored inside the sender's tag property. This method converts the current drawing on the digitDrawingView into an image, prepocesses it and adds its bitmap representation to the data set.
+     */
     @IBAction func digitButtonPressed(_ sender: UIButton) {
-        let image = digitDrawingView.getImage()!
-        let croppedImage = image.cropToMinimumBoundingBox()!
-        let resizedImage = croppedImage.resizeToSquare(withLength: 28.0)!
+        let digit = sender.tag
+        guard let resizedImageBitmap = preprocessedDigitSample() else { return }
+        digitsDataSet.addDigitSample(forDigit: digit, sampleBitmap: resizedImageBitmap)
+        
+        getSampleCounterLabel(forDigit: digit)?.text = "\(digitsDataSet.sampleCount(forDigit: digit))"
+        digitDrawingView.clearImage()
+        
+        digitsDataSet.writeToFile(filename: dataSetFilename)
+    }
+    
+    
+    /**
+     Returns a prepocessed PixelFillBitmap representation of the current drawing on the digitDrawingView.
+     - Returns: Prepocessed PixelFillBitmap of the current drawing or nil if prepocessing failed.
+     */
+    fileprivate func preprocessedDigitSample() -> PixelFillBitmap? {
+        let image = digitDrawingView.getImage()
+        let croppedImage = image?.cropToMinimumBoundingBox()
+        let resizedImage = croppedImage?.resizeToSquare(withLength: 28.0)
+        return resizedImage?.getPixelFillBitmap()
+    }
+    
+    
+    /**
+     Returns the UILabel that displays the number of samples already added for a given digit.
+     - Parameters:
+        - digit: The digit (0-9) the corresponding label is requested for.
+     */
+    func getSampleCounterLabel(forDigit digit: Int) -> UILabel? {
+        return sampleCounterLabel.filter({label in
+            return label.tag == digit
+        }).first
     }
 
+    
     /*
     // MARK: - Navigation
 

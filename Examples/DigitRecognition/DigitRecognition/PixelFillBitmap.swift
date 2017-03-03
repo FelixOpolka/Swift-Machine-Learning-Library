@@ -10,8 +10,10 @@ import UIKit
 
 /**
  Bitmap containing the fill value (i.e. alpha value) for each pixel of an image with a certain width and height.
+ 
+ Implements the NSCoding protocol and inherits from NSObject which enables it to be written to and read from file.
  */
-class PixelFillBitmap {
+class PixelFillBitmap: NSObject, NSCoding {
     /// Actual fill values for each pixel stored in a two-dimensional array.
     var pixels: [[Double]]
     
@@ -25,8 +27,20 @@ class PixelFillBitmap {
         return pixels.count
     }
     
+    /**
+     Initializes the PixelFillBitmap object with pixel fill bitmap data.
+     - Parameters:
+        - pixels: Two-dimensional array of fill values per pixel to be stored inside the PixelFillBitmap.
+     */
     init(pixels: [[Double]]) {
         self.pixels = pixels
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        self.pixels = aDecoder.decodeObject() as! [[Double]]
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(pixels)
+    }
 }
