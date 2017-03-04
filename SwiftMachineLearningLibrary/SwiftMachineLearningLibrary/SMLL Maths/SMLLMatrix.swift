@@ -227,7 +227,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     // MARK: - Storage methods
     
     public func getIORepresentation() -> NSDictionary {
-        let ioRepresentation = NSDictionary()
+        let ioRepresentation = NSMutableDictionary()
         ioRepresentation.setValue(rows, forKey: "Rows")
         ioRepresentation.setValue(columns, forKey: "Columns")
         ioRepresentation.setValue(NSArray(array: elements), forKey: "Elements")
