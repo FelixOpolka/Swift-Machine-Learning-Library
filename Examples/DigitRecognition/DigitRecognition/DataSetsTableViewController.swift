@@ -114,10 +114,10 @@ class DataSetsTableViewController: UITableViewController {
 }
 
 /**
- Implements DataSetsTableViewControllerDelegate for updating displayed data set entries after they changed.
+ Implements ListDelegate for updating displayed data set entries after they changed externally (e.g. when a new data set was added).
  */
-extension DataSetsTableViewController: DataSetsTableViewControllerDelegate {
-    func dataSetsDidChange() {
+extension DataSetsTableViewController: ListDelegate {
+    func listDidChange() {
         dataSets = DigitsDataSet.getAvailableDataSets() ?? []
         tableView.reloadData()
     }
