@@ -56,8 +56,7 @@ open class SMLLFeedforwardNeuralNetwork {
             if let biases = ( storageRepresentationDictionary.value(forKey: "Biases") as? [NSDictionary]) {
                 self.biases = try biases.map({try SMLLMatrix(ioRepresentation: $0)})
             } else { throw SMLLIOError.invalidIOData(dataIdentifier: "Biases") }
-        }
-        throw SMLLIOError.fileNotFound
+        } else { throw SMLLIOError.fileNotFound }
     }
     
     
@@ -95,7 +94,6 @@ open class SMLLFeedforwardNeuralNetwork {
                 let startIndex = miniBatchIndex * 10
                 let endIndex = (miniBatchIndex+1) * 10
                 let miniBatch = Array(trainingSet[startIndex ..< endIndex])
-                
                 updateMiniBatch(miniBatch, learningRate: learningRate)
             }
             
@@ -204,7 +202,7 @@ open class SMLLFeedforwardNeuralNetwork {
         let biasesIORepresentation = NSArray(array: biases.map({$0.getIORepresentation()}))
         let layerSizesIORepresentation = NSArray(array: layerSizes)
         
-        let  storageRepresentationDictionary = NSDictionary()
+        let storageRepresentationDictionary = NSMutableDictionary()
          storageRepresentationDictionary.setValue(weightsIORepresentation, forKey: "Weights")
          storageRepresentationDictionary.setValue(biasesIORepresentation, forKey: "Biases")
          storageRepresentationDictionary.setValue(layerSizesIORepresentation, forKey: "LayerSizes")
