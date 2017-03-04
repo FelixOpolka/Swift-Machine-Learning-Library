@@ -102,7 +102,7 @@ public func * (leftMatrix: SMLLMatrix, rightScalar: Double) -> SMLLMatrix {
  SMLLMatrixmultiplication of two matrices
  */
 public func * (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix {
-    assert(leftMatrix.columns == rightMatrix.rows, "The left matrix' number of columns does not match the right matrix' number of rows")
+    assert(leftMatrix.columns == rightMatrix.rows, "The left matrix' number of columns (\(leftMatrix.columns)) does not match the right matrix' number of rows (\(rightMatrix.rows))")
     var resultMatrix = SMLLMatrix(rows: leftMatrix.rows, columns: rightMatrix.columns)
     vDSP_mmulD(leftMatrix.elements, 1, rightMatrix.elements, 1, &resultMatrix.elements, 1, vDSP_Length(leftMatrix.rows), vDSP_Length(rightMatrix.columns), vDSP_Length(leftMatrix.columns))
     return resultMatrix
