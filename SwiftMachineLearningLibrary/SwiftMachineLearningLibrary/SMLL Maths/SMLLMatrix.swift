@@ -128,6 +128,19 @@ public struct SMLLMatrix: CustomStringConvertible {
     
     
     /**
+     Initializes a vector with all-zero components except for one which is set to 1.0 (often referred to a "versor").
+     - Parameters:
+        - component: Index of the non-zero component.
+        - shape: Shape of the vector; either column or row vector.
+        - numberOfElements: Dimension of the vector.
+     */
+    public init(versorWithNonZeroComponent component: Int, shape: SMLLMatrixShape, numberOfElements: Int) {
+        self.init(shape: shape, numberOfElements: numberOfElements, repeatedValue: 0.0)
+        elements[component] = 1.0
+    }
+    
+    
+    /**
      Initializes a matrix with the shape of a given matrix and sets all elements to `repeatedValue` which defaults to `0.0`.
      */
     public init(mirrorShapeOf shapeModel: SMLLMatrix, repeatedValue: Double = 0.0) {
