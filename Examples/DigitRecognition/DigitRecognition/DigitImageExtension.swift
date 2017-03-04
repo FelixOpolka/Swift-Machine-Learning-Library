@@ -49,7 +49,7 @@ extension UIImage {
             for column in 0 ..< width {
                 let pixelIndex = row * width + column
                 let pixelValue = abgrBitmap[pixelIndex]
-                let pixelFill = pixelValue & 0xFF000000
+                let pixelFill = (pixelValue & 0xFF000000) >> 24
                 pixelFillRow.append((Double)(pixelFill)/255.0)
             }
             pixelFills.append(pixelFillRow)
