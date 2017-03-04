@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftMachineLearningLibrary
 
 /**
  Holds the data for one data set of digit samples represented as PixelFillBitmaps.
@@ -63,6 +64,30 @@ class DigitsDataSet {
      */
     func sampleCount(forDigit digit: Int) -> Int {
         return digitSamples[digit]?.count ?? 0
+    }
+    
+    
+    /**
+     Convert the data set to the correct format required for training or testing a SMLL Neural Network.
+     - Returns: Array of pairs of sample input vector and corresponding desired output vector.
+     */
+    func getSMLLDataSet() -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] {
+        // Iterate over each digit and corresponding sample arrays.
+        let smllDataSet = digitSamples.map({(digit: Int, samples: [PixelFillBitmap]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] in
+            // Build desired output vector for the current digit.
+            let desiredOutputVectorForCurrentDigit = SMLLMatrix(versorWithNonZeroComponent: digit, shape: .columnVector, numberOfElements: 10)
+            print(desiredOutputVectorForCurrentDigit)
+            // Converts the array of bitmaps into an array of SMLLMatrices.
+            let smllMatricesForCurrentDigit = samples.map({(sample: PixelFillBitmap) -> SMLLMatrix in
+                return SMLLMatrix(shape: .columnVector, values: Array(sample.pixels.joined()))
+            })
+            // Creates the input-vector and corresponding desired output vector pairs for the current digit.
+            let smllDataSubsetForCurrentDigit = smllMatricesForCurrentDigit.map({(sampleMatrix: SMLLMatrix) -> (input: SMLLMatrix, desiredOutput: SMLLMatrix) in
+                return (input: sampleMatrix, desiredOutput: desiredOutputVectorForCurrentDigit)
+            })
+            return smllDataSubsetForCurrentDigit
+        })
+        return Array(smllDataSet.joined())
     }
     
     
