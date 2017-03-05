@@ -21,6 +21,9 @@ class EnterDigitsViewController: UIViewController {
     
     /// The data set currently edited.
     var digitsDataSet: DigitsDataSet!
+    
+    /// Prepocessor used for this data set.
+    let digitImagePrepocessor = DigitImagePrepocessor()
 
     
     override func viewDidLoad() {
@@ -60,25 +63,14 @@ class EnterDigitsViewController: UIViewController {
      */
     @IBAction func digitButtonPressed(_ sender: UIButton) {
         let digit = sender.tag
-        guard let resizedImageBitmap = preprocessedDigitSample() else { return }
+        guard let inputImage = digitDrawingView.getImage() else { return }
+        guard let resizedImageBitmap = digitImagePrepocessor.prepocessDigitImage(image: inputImage) else { return }
         digitsDataSet.addDigitSample(forDigit: digit, sampleBitmap: resizedImageBitmap)
         
         getSampleCounterLabel(forDigit: digit)?.text = "\(digitsDataSet.sampleCount(forDigit: digit))"
         digitDrawingView.clearImage()
         
         digitsDataSet.writeToFile(filename: dataSetFilename)
-    }
-    
-    
-    /**
-     Returns a prepocessed PixelFillBitmap representation of the current drawing on the digitDrawingView.
-     - Returns: Prepocessed PixelFillBitmap of the current drawing or nil if prepocessing failed.
-     */
-    fileprivate func preprocessedDigitSample() -> PixelFillBitmap? {
-        let image = digitDrawingView.getImage()
-        let croppedImage = image?.cropToMinimumBoundingBox()
-        let resizedImage = croppedImage?.resizeToSquare(withLength: 28.0)
-        return resizedImage?.getPixelFillBitmap()
     }
     
     
