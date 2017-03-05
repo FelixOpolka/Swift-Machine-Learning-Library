@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39034E361E69882F00B364DC /* DataSetsTableViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39034E351E69882F00B364DC /* DataSetsTableViewControllerDelegate.swift */; };
+		39034E461E69B4BA00B364DC /* SwiftMachineLearningLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39034E441E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */; };
+		39034E471E69B4BA00B364DC /* SwiftMachineLearningLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39034E441E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		39034E4C1E69B4D900B364DC /* NetworksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39034E4B1E69B4D900B364DC /* NetworksTableViewController.swift */; };
+		39034E4E1E69B57400B364DC /* NetworkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39034E4D1E69B57400B364DC /* NetworkList.swift */; };
+		39034E511E69BB1300B364DC /* CreateNetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39034E501E69BB1300B364DC /* CreateNetworkTableViewController.swift */; };
+		39034E551E69BDDA00B364DC /* ListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39034E541E69BDDA00B364DC /* ListDelegate.swift */; };
+		391BF4E51E6C296400B8EA37 /* DigitImagePrepocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391BF4E41E6C296400B8EA37 /* DigitImagePrepocessor.swift */; };
+		395616891E6AD35300538DA5 /* SetupTrainingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395616881E6AD35300538DA5 /* SetupTrainingTableViewController.swift */; };
+		3956168D1E6AD70E00538DA5 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3956168C1E6AD70E00538DA5 /* TrainingViewController.swift */; };
 		3971D0C61E660F2C0042B694 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971D0C51E660F2C0042B694 /* AppDelegate.swift */; };
-		3971D0C81E660F2C0042B694 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971D0C71E660F2C0042B694 /* MasterViewController.swift */; };
-		3971D0CA1E660F2C0042B694 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971D0C91E660F2C0042B694 /* DetailViewController.swift */; };
 		3971D0CD1E660F2C0042B694 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3971D0CB1E660F2C0042B694 /* Main.storyboard */; };
 		3971D0CF1E660F2C0042B694 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3971D0CE1E660F2C0042B694 /* Assets.xcassets */; };
 		3971D0D21E660F2C0042B694 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3971D0D01E660F2C0042B694 /* LaunchScreen.storyboard */; };
@@ -20,15 +26,66 @@
 		398F85591E683BB8005E1F87 /* DigitsDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398F85581E683BB8005E1F87 /* DigitsDataSet.swift */; };
 		398F855B1E687BFE005E1F87 /* CreateDataSetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398F855A1E687BFE005E1F87 /* CreateDataSetTableViewController.swift */; };
 		39CEC1E01E66F02D0094AC30 /* PixelFillBitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1DF1E66F02D0094AC30 /* PixelFillBitmap.swift */; };
+		39E6276B1E6A22C600846ABC /* UseNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6276A1E6A22C600846ABC /* UseNetworkViewController.swift */; };
 		39F77B961E6622DC00BC8A98 /* EnterDigitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F77B951E6622DC00BC8A98 /* EnterDigitsViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		39034E3F1E69B47B00B364DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 394500111CEA097400532153;
+			remoteInfo = "SwiftMachineLearningLibrary Mac";
+		};
+		39034E411E69B47B00B364DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3945001B1CEA097400532153;
+			remoteInfo = SwiftMachineLearningLibraryTests;
+		};
+		39034E431E69B47B00B364DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3960DB491D018B45004A5349;
+			remoteInfo = "SwiftMachineLearningLibrary iOS";
+		};
+		39034E481E69B4BA00B364DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3960DB481D018B45004A5349;
+			remoteInfo = "SwiftMachineLearningLibrary iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		39034E4A1E69B4BA00B364DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				39034E471E69B4BA00B364DC /* SwiftMachineLearningLibrary.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		39034E351E69882F00B364DC /* DataSetsTableViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSetsTableViewControllerDelegate.swift; sourceTree = "<group>"; };
+		39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMachineLearningLibrary.xcodeproj; path = ../../SwiftMachineLearningLibrary/SwiftMachineLearningLibrary.xcodeproj; sourceTree = "<group>"; };
+		39034E4B1E69B4D900B364DC /* NetworksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksTableViewController.swift; sourceTree = "<group>"; };
+		39034E4D1E69B57400B364DC /* NetworkList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkList.swift; sourceTree = "<group>"; };
+		39034E501E69BB1300B364DC /* CreateNetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNetworkTableViewController.swift; sourceTree = "<group>"; };
+		39034E541E69BDDA00B364DC /* ListDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDelegate.swift; sourceTree = "<group>"; };
+		391BF4E41E6C296400B8EA37 /* DigitImagePrepocessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitImagePrepocessor.swift; sourceTree = "<group>"; };
+		395616881E6AD35300538DA5 /* SetupTrainingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupTrainingTableViewController.swift; sourceTree = "<group>"; };
+		3956168C1E6AD70E00538DA5 /* TrainingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		3971D0C21E660F2C0042B694 /* DigitRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3971D0C51E660F2C0042B694 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3971D0C71E660F2C0042B694 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		3971D0C91E660F2C0042B694 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		3971D0CC1E660F2C0042B694 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3971D0CE1E660F2C0042B694 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3971D0D11E660F2C0042B694 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -39,6 +96,7 @@
 		398F85581E683BB8005E1F87 /* DigitsDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitsDataSet.swift; sourceTree = "<group>"; };
 		398F855A1E687BFE005E1F87 /* CreateDataSetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDataSetTableViewController.swift; sourceTree = "<group>"; };
 		39CEC1DF1E66F02D0094AC30 /* PixelFillBitmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelFillBitmap.swift; sourceTree = "<group>"; };
+		39E6276A1E6A22C600846ABC /* UseNetworkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseNetworkViewController.swift; sourceTree = "<group>"; };
 		39F77B951E6622DC00BC8A98 /* EnterDigitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterDigitsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,15 +105,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39034E461E69B4BA00B364DC /* SwiftMachineLearningLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		39034E3A1E69B47B00B364DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39034E401E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */,
+				39034E421E69B47B00B364DC /* SwiftMachineLearningLibraryTests.xctest */,
+				39034E441E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3971D0B91E660F2C0042B694 = {
 			isa = PBXGroup;
 			children = (
+				39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */,
 				3971D0C41E660F2C0042B694 /* DigitRecognition */,
 				3971D0C31E660F2C0042B694 /* Products */,
 			);
@@ -73,10 +143,15 @@
 			isa = PBXGroup;
 			children = (
 				3971D0C51E660F2C0042B694 /* AppDelegate.swift */,
-				3971D0C71E660F2C0042B694 /* MasterViewController.swift */,
-				3971D0C91E660F2C0042B694 /* DetailViewController.swift */,
+				39034E4B1E69B4D900B364DC /* NetworksTableViewController.swift */,
+				39034E501E69BB1300B364DC /* CreateNetworkTableViewController.swift */,
+				39E6276A1E6A22C600846ABC /* UseNetworkViewController.swift */,
+				395616881E6AD35300538DA5 /* SetupTrainingTableViewController.swift */,
+				3956168C1E6AD70E00538DA5 /* TrainingViewController.swift */,
+				39034E541E69BDDA00B364DC /* ListDelegate.swift */,
+				39034E4D1E69B57400B364DC /* NetworkList.swift */,
+				391BF4E41E6C296400B8EA37 /* DigitImagePrepocessor.swift */,
 				3971D0D91E6612850042B694 /* DataSetsTableViewController.swift */,
-				39034E351E69882F00B364DC /* DataSetsTableViewControllerDelegate.swift */,
 				398F855A1E687BFE005E1F87 /* CreateDataSetTableViewController.swift */,
 				3971D0DB1E66164C0042B694 /* DrawingView.swift */,
 				39F77B951E6622DC00BC8A98 /* EnterDigitsViewController.swift */,
@@ -101,10 +176,12 @@
 				3971D0BE1E660F2C0042B694 /* Sources */,
 				3971D0BF1E660F2C0042B694 /* Frameworks */,
 				3971D0C01E660F2C0042B694 /* Resources */,
+				39034E4A1E69B4BA00B364DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				39034E491E69B4BA00B364DC /* PBXTargetDependency */,
 			);
 			name = DigitRecognition;
 			productName = DigitRecognition;
@@ -139,12 +216,42 @@
 			mainGroup = 3971D0B91E660F2C0042B694;
 			productRefGroup = 3971D0C31E660F2C0042B694 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 39034E3A1E69B47B00B364DC /* Products */;
+					ProjectRef = 39034E391E69B47B00B364DC /* SwiftMachineLearningLibrary.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3971D0C11E660F2C0042B694 /* DigitRecognition */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		39034E401E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftMachineLearningLibrary.framework;
+			remoteRef = 39034E3F1E69B47B00B364DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		39034E421E69B47B00B364DC /* SwiftMachineLearningLibraryTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftMachineLearningLibraryTests.xctest;
+			remoteRef = 39034E411E69B47B00B364DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		39034E441E69B47B00B364DC /* SwiftMachineLearningLibrary.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftMachineLearningLibrary.framework;
+			remoteRef = 39034E431E69B47B00B364DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3971D0C01E660F2C0042B694 /* Resources */ = {
@@ -164,21 +271,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39034E4C1E69B4D900B364DC /* NetworksTableViewController.swift in Sources */,
 				3971D0DA1E6612850042B694 /* DataSetsTableViewController.swift in Sources */,
-				3971D0CA1E660F2C0042B694 /* DetailViewController.swift in Sources */,
+				3956168D1E6AD70E00538DA5 /* TrainingViewController.swift in Sources */,
 				3971D0DC1E66164C0042B694 /* DrawingView.swift in Sources */,
+				39034E551E69BDDA00B364DC /* ListDelegate.swift in Sources */,
 				39F77B961E6622DC00BC8A98 /* EnterDigitsViewController.swift in Sources */,
-				39034E361E69882F00B364DC /* DataSetsTableViewControllerDelegate.swift in Sources */,
+				39034E4E1E69B57400B364DC /* NetworkList.swift in Sources */,
+				395616891E6AD35300538DA5 /* SetupTrainingTableViewController.swift in Sources */,
 				398F855B1E687BFE005E1F87 /* CreateDataSetTableViewController.swift in Sources */,
+				39034E511E69BB1300B364DC /* CreateNetworkTableViewController.swift in Sources */,
 				398F85591E683BB8005E1F87 /* DigitsDataSet.swift in Sources */,
 				39CEC1E01E66F02D0094AC30 /* PixelFillBitmap.swift in Sources */,
 				398F85571E683470005E1F87 /* DigitImageExtension.swift in Sources */,
-				3971D0C81E660F2C0042B694 /* MasterViewController.swift in Sources */,
 				3971D0C61E660F2C0042B694 /* AppDelegate.swift in Sources */,
+				39E6276B1E6A22C600846ABC /* UseNetworkViewController.swift in Sources */,
+				391BF4E51E6C296400B8EA37 /* DigitImagePrepocessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		39034E491E69B4BA00B364DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftMachineLearningLibrary iOS";
+			targetProxy = 39034E481E69B4BA00B364DC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3971D0CB1E660F2C0042B694 /* Main.storyboard */ = {
@@ -296,6 +416,7 @@
 		3971D0D71E660F2C0042B694 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5EC6W8CYUH;
 				INFOPLIST_FILE = DigitRecognition/Info.plist;
@@ -309,6 +430,7 @@
 		3971D0D81E660F2C0042B694 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5EC6W8CYUH;
 				INFOPLIST_FILE = DigitRecognition/Info.plist;
