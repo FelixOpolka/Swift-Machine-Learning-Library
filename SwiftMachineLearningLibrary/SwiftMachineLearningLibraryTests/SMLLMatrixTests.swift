@@ -34,7 +34,7 @@ class SMLLMatrixTests: XCTestCase {
     func testTransposePerformance() {
         let testMatrix = SMLLMatrix(rows: 1_000, columns: 10_000, sequence: true)
         self.measure {
-            testMatrix.transpose()
+            _ = testMatrix.transpose()
         }
     }
     
@@ -47,9 +47,9 @@ class SMLLMatrixTests: XCTestCase {
     }
     
     func testMaxIndexPerformance() {
-        let testMatrix = SMLLMatrix(rows: 900, columns: 1000, normalRandomValues: true)
+        let testMatrix = SMLLMatrix(normalRandomValuesMatrixWithRows: 900, columns: 1000)
         self.measure { // Un-Accelerated: 0.116
-            testMatrix.maxIndex()
+            _ = testMatrix.maxIndex()
         }
     }
     
@@ -199,7 +199,7 @@ class SMLLMatrixTests: XCTestCase {
         let leftTestMatrix = SMLLMatrix(rows: 200, columns: 100, sequence: true)
         let rightTestMatrix = SMLLMatrix(rows: 100, columns: 50, sequence: true)
         self.measure( {    // Un-Accelerated: 0.463
-            leftTestMatrix * rightTestMatrix
+            _ = leftTestMatrix * rightTestMatrix
         })
     }
     

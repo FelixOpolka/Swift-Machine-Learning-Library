@@ -84,7 +84,7 @@ public struct SMLLMatrix: CustomStringConvertible {
     /**
      Initializes a matrix of the given shape with normal random values.
      */
-    public init(rows: Int, columns: Int, normalRandomValues: Bool) {
+    public init(normalRandomValuesMatrixWithRows rows: Int, columns: Int) {
         self.rows = rows
         self.columns = columns
         elements = [Double]()
@@ -124,6 +124,24 @@ public struct SMLLMatrix: CustomStringConvertible {
             self.columns = values.count
         }
         elements = values
+    }
+    
+    
+    /**
+     Initializes a matrix of the given shape (column or row vector) with normal random values.
+     */
+    public init(normalRandomValuesMatrixWithShape shape: SMLLMatrixShape, numberOfElements: Int) {
+        if shape == .columnVector {
+            self.rows = numberOfElements
+            self.columns = 1
+        } else {
+            self.rows = 1;
+            self.columns = numberOfElements
+        }
+        elements = [Double]()
+        for _ in 0 ..< numberOfElements {
+            elements.append(normalRandomValue())
+        }
     }
     
     
