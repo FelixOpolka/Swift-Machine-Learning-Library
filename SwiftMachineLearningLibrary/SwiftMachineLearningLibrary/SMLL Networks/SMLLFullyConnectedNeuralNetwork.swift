@@ -52,18 +52,24 @@ class SMLLFullyConnectedNeuralNetwork: SMLLNetwork {
             }
             // If a test set was provided, test how well the network performs on these samples
             if let testSet = testSet {
-                var correctlyClassifiedCount = 0
-                for testSample in testSet {
-                    let output = predict(input: testSample.input)
-                    let outputMaxIndex = output.maxIndex()
-                    let desiredOutputMaxIndex = testSample.desiredOutput.maxIndex()
-                    if outputMaxIndex == desiredOutputMaxIndex {
-                        correctlyClassifiedCount += 1
-                    }
-                }
+                let correctlyClassifiedCount = test(testSet: testSet)
                 print("Epoch \(epochIndex): \(correctlyClassifiedCount)/\(testSet.count)")
             }
         }
+    }
+    
+    
+    func test(testSet: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]) -> Int {
+        var correctlyClassifiedCount = 0
+        for testSample in testSet {
+            let output = predict(input: testSample.input)
+            let outputMaxIndex = output.maxIndex()
+            let desiredOutputMaxIndex = testSample.desiredOutput.maxIndex()
+            if outputMaxIndex == desiredOutputMaxIndex {
+                correctlyClassifiedCount += 1
+            }
+        }
+        return correctlyClassifiedCount
     }
     
     

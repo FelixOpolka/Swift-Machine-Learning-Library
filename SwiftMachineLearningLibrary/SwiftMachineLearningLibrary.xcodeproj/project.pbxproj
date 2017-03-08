@@ -21,9 +21,10 @@
 		396690A81E6EA1F400227155 /* SMLLNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690A61E6EA1DA00227155 /* SMLLNetwork.swift */; };
 		396690AD1E6EADA500227155 /* SMLLFullyConnectedNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690AC1E6EADA500227155 /* SMLLFullyConnectedNeuralNetwork.swift */; };
 		396690AE1E6EADA500227155 /* SMLLFullyConnectedNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690AC1E6EADA500227155 /* SMLLFullyConnectedNeuralNetwork.swift */; };
-		396690B01E6ED11E00227155 /* SMLLFullyConnectedNeuralNetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690AF1E6ED11E00227155 /* SMLLFullyConnectedNeuralNetworkTest.swift */; };
 		396690B31E6EDF4E00227155 /* SMLLShuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690B21E6EDF4E00227155 /* SMLLShuffle.swift */; };
 		396690B41E6EDF4E00227155 /* SMLLShuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690B21E6EDF4E00227155 /* SMLLShuffle.swift */; };
+		396690BC1E6F460D00227155 /* SMLLNeuralNetworkIrisDataSetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396690BB1E6F460D00227155 /* SMLLNeuralNetworkIrisDataSetTest.swift */; };
+		396690BE1E6F4DBA00227155 /* IrisDataSet.csv in Resources */ = {isa = PBXBuildFile; fileRef = 396690BD1E6F4DBA00227155 /* IrisDataSet.csv */; };
 		396724B61E6DFA1800E9DDD8 /* SMLLLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396724B51E6DFA1800E9DDD8 /* SMLLLayer.swift */; };
 		396724BB1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396724BA1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift */; };
 		396724BC1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396724BA1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift */; };
@@ -55,8 +56,9 @@
 		3960DB4D1D018B45004A5349 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		396690A61E6EA1DA00227155 /* SMLLNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLNetwork.swift; sourceTree = "<group>"; };
 		396690AC1E6EADA500227155 /* SMLLFullyConnectedNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLFullyConnectedNeuralNetwork.swift; sourceTree = "<group>"; };
-		396690AF1E6ED11E00227155 /* SMLLFullyConnectedNeuralNetworkTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLFullyConnectedNeuralNetworkTest.swift; sourceTree = "<group>"; };
 		396690B21E6EDF4E00227155 /* SMLLShuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLShuffle.swift; sourceTree = "<group>"; };
+		396690BB1E6F460D00227155 /* SMLLNeuralNetworkIrisDataSetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLNeuralNetworkIrisDataSetTest.swift; sourceTree = "<group>"; };
+		396690BD1E6F4DBA00227155 /* IrisDataSet.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IrisDataSet.csv; sourceTree = "<group>"; };
 		396724B51E6DFA1800E9DDD8 /* SMLLLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLLayer.swift; sourceTree = "<group>"; };
 		396724BA1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLFullyConnectedLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,8 +122,9 @@
 		3945001F1CEA097400532153 /* SwiftMachineLearningLibraryTests */ = {
 			isa = PBXGroup;
 			children = (
+				396690BD1E6F4DBA00227155 /* IrisDataSet.csv */,
 				394500331CEA0AF400532153 /* SMLLMatrixTests.swift */,
-				396690AF1E6ED11E00227155 /* SMLLFullyConnectedNeuralNetworkTest.swift */,
+				396690BB1E6F460D00227155 /* SMLLNeuralNetworkIrisDataSetTest.swift */,
 				394500221CEA097400532153 /* Info.plist */,
 			);
 			path = SwiftMachineLearningLibraryTests;
@@ -322,6 +325,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				396690BE1E6F4DBA00227155 /* IrisDataSet.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,8 +358,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				396690B01E6ED11E00227155 /* SMLLFullyConnectedNeuralNetworkTest.swift in Sources */,
 				394500341CEA0AF400532153 /* SMLLMatrixTests.swift in Sources */,
+				396690BC1E6F460D00227155 /* SMLLNeuralNetworkIrisDataSetTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
