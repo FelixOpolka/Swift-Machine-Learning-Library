@@ -218,7 +218,35 @@ class SMLLMatrixTests: XCTestCase {
         self.measure { // Un-Accelerated: 0.030
             _ = leftMatrix ○ rightMatrix
         }
-        
+    }
+    
+    
+    func testConvolution() {
+        let testMatrix = SMLLMatrix(rows: 6, columns: 6, sequence: true)
+        let kernelMatrix = SMLLMatrix(rows: 3, columns: 3, repeatedValue: 0.5)
+        let checkMatrix = SMLLMatrix(rows: 4, columns: 4, values: [36.0, 40.5, 45.0, 49.5,
+                                                                   63.0, 67.5, 72.0, 76.5,
+                                                                   90.0, 94.5, 99.0, 103.5,
+                                                                   117.0, 121.5, 126.0, 130.5])
+        let resultMatrix = convolute(signalMatrix: testMatrix, kernelMatrix: kernelMatrix)
+        XCTAssertEqual(resultMatrix, checkMatrix)
+    }
+    
+    func testConvolution2() {
+        let testMatrix = SMLLMatrix(rows: 6, columns: 6, sequence: true)
+        let kernelMatrix = SMLLMatrix(rows: 5, columns: 3, repeatedValue: 0.5)
+        let checkMatrix = SMLLMatrix(rows: 2, columns: 4, values: [105.0, 112.5, 120.0, 127.5,
+                                                                   150.0, 157.5, 165.0, 172.5])
+        let resultMatrix = convolute(signalMatrix: testMatrix, kernelMatrix: kernelMatrix)
+        XCTAssertEqual(resultMatrix, checkMatrix)
+    }
+    
+    func testConvolutionPerformance() {
+        let testMatrix = SMLLMatrix(rows: 100, columns: 100, sequence: true)
+        let kernelMatrix = SMLLMatrix(rows: 11, columns: 11, sequence: true)
+        self.measure {
+            _ = convolute(signalMatrix: testMatrix, kernelMatrix: kernelMatrix)
+        }
     }
     
     

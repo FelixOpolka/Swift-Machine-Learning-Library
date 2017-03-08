@@ -117,7 +117,31 @@ public func ○ (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix 
     assert(leftMatrix.rows == rightMatrix.rows && leftMatrix.columns == rightMatrix.columns, "Trying to calculate the Hadamad product of two matrices of different sizes")
     var result = SMLLMatrix(rows: leftMatrix.rows, columns: leftMatrix.columns)
     vDSP_vmulD(leftMatrix.elements, 1, rightMatrix.elements, 1, &result.elements, 1, vDSP_Length(result.elements.count))
+    
     return result
+}
+
+
+/**
+ Performs a convolution on the given signal matrix using the given kernel (must have odd dimensions). Kernel does not extend beyond the boundaries of the signal matrix, therefore the resulting matrix is smaller than signal matrix (``result.rows = signal.rows - kernel.rows + 1`` and ``result.columns = signal.columns - kernel.columns + 1``)
+ */
+public func convolute(signalMatrix: SMLLMatrix, kernelMatrix: SMLLMatrix) -> SMLLMatrix {
+    var result = SMLLMatrix(mirrorShapeOf: signalMatrix)
+    vDSP_imgfirD(signalMatrix.elements, vDSP_Length(signalMatrix.rows), vDSP_Length(signalMatrix.columns), kernelMatrix.elements, &result.elements, vDSP_Length(kernelMatrix.rows), vDSP_Length(kernelMatrix.columns))
+    
+    // Cut borders
+    let verticalBorderWidth = (kernelMatrix.columns-1)/2
+    let horizontalBorderWidth = (kernelMatrix.rows-1)/2
+    let elementsWithoutBorders = result.elements.enumerated().filter({(index, element) in
+        let notTopBorder = index >= (horizontalBorderWidth*result.columns)
+        let notBottomBorder = index < (result.elements.count - (horizontalBorderWidth*result.columns))
+        let notLeftBorder = index % result.columns >= verticalBorderWidth
+        let notRightBorder = index % result.columns < (result.columns-verticalBorderWidth)
+        return notTopBorder && notBottomBorder && notLeftBorder && notRightBorder
+    }).map({(index, element) in
+        return element
+    })
+    return SMLLMatrix(rows: result.rows-2*horizontalBorderWidth, columns: result.columns-2*verticalBorderWidth, values: elementsWithoutBorders)
 }
 
 
