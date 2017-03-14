@@ -169,6 +169,17 @@ public struct SMLLMatrix: CustomStringConvertible {
     
     
     /**
+     Initializes a matrix with the shape of a given matrix and the given values.
+     */
+    public init(mirrorShapeOf shapeModel: SMLLMatrix, values: [Double]) {
+        assert(values.count == shapeModel.rows * shapeModel.columns, "Values are not compatible with matrix shape.")
+        self.rows = shapeModel.rows
+        self.columns = shapeModel.columns
+        elements = values
+    }
+    
+    
+    /**
      Initializes a matrix from a given storage dictionary.
      */
     public init(ioRepresentation: NSDictionary) throws {
@@ -311,6 +322,10 @@ public struct SMLLMatrix: CustomStringConvertible {
         return region.maxValueAndIndex()
     }
 
+    
+    public func map(transform: (Double) -> Double) -> SMLLMatrix {
+        return SMLLMatrix(mirrorShapeOf: self, values: elements.map(transform))
+    }
     
     // - Private methods
     

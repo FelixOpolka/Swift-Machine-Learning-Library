@@ -37,7 +37,7 @@ class ViewController: UIViewController {
             
             // Train the network using SGD
             print("Train network...")
-            let convolutionLayer = SMLLConvolutionLayer(features: 10, kernelRows: 5, kernelColumns: 5)
+            let convolutionLayer = SMLLConvolutionLayer(features: 20, kernelRows: 5, kernelColumns: 5)
             let poolingLayer = SMLLMaxPoolingLayer(poolingRegionRows: 2, poolingRegionColumns: 2)
             let fullyConnectedLayer1 = SMLLFullyConnectedLayer(numberOfNeurons: 100)
             let fullyConnectedLayer2 = SMLLFullyConnectedLayer(numberOfNeurons: 10)

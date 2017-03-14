@@ -18,6 +18,9 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
     /// Bias of each of the layer's neurons.
     var biases: SMLLMatrix
     
+    /// Non-linear activation function used in this layer.
+    let activation: SMLLActivation
+    
     /// Sum of parameter (i.e. weights and biases) gradients for one or more iterations of the backpropagation algorithm. Reset to nil onced used for adjusting layer parameters (i.e. weights and biases) (refer to ``adjustParameters``).
     var totalGradients: (biasesGradients: SMLLMatrix, weightsGradients: SMLLMatrix)?
     
@@ -42,8 +45,9 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
     var mostRecentWeightedSums: SMLLMatrix?
     
     
-    public init(numberOfNeurons: Int) {
-        biases = SMLLMatrix(normalRandomValuesMatrixWithVectorShape: .columnVector, numberOfElements: numberOfNeurons)
+    public init(numberOfNeurons: Int, activation: SMLLActivation = SMLLSigmoid()) {
+        self.biases = SMLLMatrix(normalRandomValuesMatrixWithVectorShape: .columnVector, numberOfElements: numberOfNeurons)
+        self.activation = activation
     }
     
     

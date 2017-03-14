@@ -18,6 +18,9 @@ public class SMLLConvolutionLayer: SMLLLayer {
     /// Bias for each feature added to each convolution result.
     var bias: [SMLLMatrix]
     
+    /// Non-linear activation function used in this layer.
+    let activation: SMLLActivation
+    
     /// Sum of parameter (i.e. weights and biases) gradients for one or more iterations of the backpropagation algorithm. Reset to nil onced used for adjusting layer parameters (i.e. weights and biases) (refer to ``adjustParameters``).
     var totalGradients: [(biasesGradients: SMLLMatrix, weightsGradients: SMLLMatrix)]?
     
@@ -39,7 +42,7 @@ public class SMLLConvolutionLayer: SMLLLayer {
     public var inputShape: SMLLLayerShape!
     
     
-    public init(features: Int, kernelRows: Int, kernelColumns: Int) {
+    public init(features: Int, kernelRows: Int, kernelColumns: Int, activation: SMLLActivation = SMLLRectifier()) {
         assert(kernelRows % 2 == 1 && kernelColumns % 2 == 1, "Kernel must have odd dimensions.")
         self.kernelRows = kernelRows
         self.kernelColumns = kernelColumns
@@ -50,6 +53,7 @@ public class SMLLConvolutionLayer: SMLLLayer {
         self.bias = (0..<features).map({_ in
             return SMLLMatrix(normalRandomValuesMatrixWithRows: 1, columns: 1)
         })
+        self.activation = activation
     }
     
     
@@ -61,7 +65,7 @@ public class SMLLConvolutionLayer: SMLLLayer {
             return bias[featureIndex].elements.first! + convoluteValidKernelOnly(signalMatrix: input, kernelMatrix: weights)
         })
         let convolutionOutput = mostRecentWeightedSums!.map({featureMostRecentWeightedSums in
-            return sigmoid(featureMostRecentWeightedSums)
+            return activation.apply(featureMostRecentWeightedSums)
         })
         return convolutionOutput
     }
@@ -71,7 +75,7 @@ public class SMLLConvolutionLayer: SMLLLayer {
         guard let mostRecentInputs = mostRecentInputs, let mostRecentWeightedSums = mostRecentWeightedSums
             else { assert(false, "Cannot backpropagate without previous forward propagation.") }
         let deltas = zip(layerOutputError, mostRecentWeightedSums).map({featureConvolutionOutputError, featureMostRecentWeightedSum in
-            featureConvolutionOutputError ○ sigmoidPrime(featureMostRecentWeightedSum)
+            featureConvolutionOutputError ○ activation.applyDerivative(featureMostRecentWeightedSum)
         })
         let biasGradients = deltas.map({featureDeltas in
             SMLLMatrix(rows: 1, columns: 1, values: [featureDeltas.elements.reduce(0.0, +)])
@@ -122,15 +126,5 @@ public class SMLLConvolutionLayer: SMLLLayer {
             featureWeights + stepCalculation(featureTotalGradients.weightsGradients)
         })
         self.totalGradients = nil
-    }
-    
-    
-    fileprivate func sigmoid(_ z: SMLLMatrix) -> SMLLMatrix {
-        return 1.0 / (1.0 + exp(-z))
-    }
-    
-    
-    fileprivate func sigmoidPrime(_ z: SMLLMatrix) -> SMLLMatrix {
-        return sigmoid(z) ○ (1.0 - sigmoid(z))
     }
 }

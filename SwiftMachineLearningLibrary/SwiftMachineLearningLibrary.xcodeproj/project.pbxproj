@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		39119C001E71D4C400E999BD /* SMLLMathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B22A481E7153F200532C07 /* SMLLMathUtilities.swift */; };
 		391DF65D1E746F2E002B01DF /* SMLLNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391DF65C1E746F2E002B01DF /* SMLLNeuralNetwork.swift */; };
+		39320D601E782DCB009F53D4 /* SMLLActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D5F1E782DCB009F53D4 /* SMLLActivation.swift */; };
+		39320D611E782DCB009F53D4 /* SMLLActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D5F1E782DCB009F53D4 /* SMLLActivation.swift */; };
+		39320D631E782E6A009F53D4 /* SMLLSigmoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D621E782E6A009F53D4 /* SMLLSigmoid.swift */; };
+		39320D641E782E6A009F53D4 /* SMLLSigmoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D621E782E6A009F53D4 /* SMLLSigmoid.swift */; };
+		39320D661E782F30009F53D4 /* SMLLRectifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D651E782F30009F53D4 /* SMLLRectifier.swift */; };
+		39320D671E782F30009F53D4 /* SMLLRectifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39320D651E782F30009F53D4 /* SMLLRectifier.swift */; };
 		3936C1901E76E3B80026DB7D /* SMLLLayerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936C18F1E76E3B80026DB7D /* SMLLLayerShape.swift */; };
 		3936C1911E76E4340026DB7D /* SMLLLayerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936C18F1E76E3B80026DB7D /* SMLLLayerShape.swift */; };
 		394500151CEA097400532153 /* SwiftMachineLearningLibrary Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 394500141CEA097400532153 /* SwiftMachineLearningLibrary Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,6 +55,9 @@
 
 /* Begin PBXFileReference section */
 		391DF65C1E746F2E002B01DF /* SMLLNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLNeuralNetwork.swift; sourceTree = "<group>"; };
+		39320D5F1E782DCB009F53D4 /* SMLLActivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLActivation.swift; sourceTree = "<group>"; };
+		39320D621E782E6A009F53D4 /* SMLLSigmoid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLSigmoid.swift; sourceTree = "<group>"; };
+		39320D651E782F30009F53D4 /* SMLLRectifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLRectifier.swift; sourceTree = "<group>"; };
 		3936C18F1E76E3B80026DB7D /* SMLLLayerShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMLLLayerShape.swift; sourceTree = "<group>"; };
 		394500111CEA097400532153 /* SwiftMachineLearningLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMachineLearningLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		394500141CEA097400532153 /* SwiftMachineLearningLibrary Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftMachineLearningLibrary Mac.h"; sourceTree = "<group>"; };
@@ -98,6 +107,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		39320D5E1E782DA3009F53D4 /* SMLL Activations */ = {
+			isa = PBXGroup;
+			children = (
+				39320D5F1E782DCB009F53D4 /* SMLLActivation.swift */,
+				39320D621E782E6A009F53D4 /* SMLLSigmoid.swift */,
+				39320D651E782F30009F53D4 /* SMLLRectifier.swift */,
+			);
+			path = "SMLL Activations";
+			sourceTree = "<group>";
+		};
 		394500071CEA097400532153 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +188,7 @@
 		3960DB541D018D14004A5349 /* SwiftMachineLearningLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				39320D5E1E782DA3009F53D4 /* SMLL Activations */,
 				396690B11E6EDF2900227155 /* SMLL Utilities */,
 				396690A51E6EA1AE00227155 /* SMLL Networks */,
 				396724B41E6DF9EB00E9DDD8 /* SMLL Layers */,
@@ -358,8 +378,11 @@
 				39B22A4B1E71997500532C07 /* SMLLMaxPoolingLayer.swift in Sources */,
 				396690B31E6EDF4E00227155 /* SMLLShuffle.swift in Sources */,
 				396724BB1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift in Sources */,
+				39320D631E782E6A009F53D4 /* SMLLSigmoid.swift in Sources */,
 				3936C1901E76E3B80026DB7D /* SMLLLayerShape.swift in Sources */,
+				39320D661E782F30009F53D4 /* SMLLRectifier.swift in Sources */,
 				3945002E1CEA099400532153 /* SMLLMatrix.swift in Sources */,
+				39320D601E782DCB009F53D4 /* SMLLActivation.swift in Sources */,
 				39B22A491E7153F200532C07 /* SMLLMathUtilities.swift in Sources */,
 				391DF65D1E746F2E002B01DF /* SMLLNeuralNetwork.swift in Sources */,
 				394500321CEA09B700532153 /* SMLLFeedforwardNeuralNetwork.swift in Sources */,
@@ -385,8 +408,11 @@
 				396690B41E6EDF4E00227155 /* SMLLShuffle.swift in Sources */,
 				3960DB511D018C1D004A5349 /* SMLLFeedforwardNeuralNetwork.swift in Sources */,
 				39119C001E71D4C400E999BD /* SMLLMathUtilities.swift in Sources */,
+				39320D641E782E6A009F53D4 /* SMLLSigmoid.swift in Sources */,
 				396724BC1E6DFEF600E9DDD8 /* SMLLFullyConnectedLayer.swift in Sources */,
+				39320D671E782F30009F53D4 /* SMLLRectifier.swift in Sources */,
 				3960DB521D018C1D004A5349 /* SMLLMatrix.swift in Sources */,
+				39320D611E782DCB009F53D4 /* SMLLActivation.swift in Sources */,
 				397F22881E7554DF00334D06 /* SMLLNeuralNetwork.swift in Sources */,
 				396724BD1E6E0E6D00E9DDD8 /* SMLLLayer.swift in Sources */,
 				3936C1911E76E4340026DB7D /* SMLLLayerShape.swift in Sources */,

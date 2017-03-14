@@ -71,6 +71,7 @@ open class SMLLNeuralNetwork {
             // Train the network with one iteration over the whole training set in portions of one miniBatchSize
             currentTrainingSet.shuffle()
             for miniBatchIndex in 0 ..< ((trainingSet.count / miniBatchSize) - 1) {
+                print("MiniBatch \(miniBatchIndex)")
                 let startIndex = miniBatchIndex * 10
                 let endIndex = (miniBatchIndex+1) * 10
                 let miniBatch = Array(trainingSet[startIndex ..< endIndex])
