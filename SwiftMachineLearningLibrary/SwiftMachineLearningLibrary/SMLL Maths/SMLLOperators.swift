@@ -123,25 +123,39 @@ public func ○ (leftMatrix: SMLLMatrix, rightMatrix: SMLLMatrix) -> SMLLMatrix 
 
 
 /**
- Performs a convolution on the given signal matrix using the given kernel (must have odd dimensions). Kernel does not extend beyond the boundaries of the signal matrix, therefore the resulting matrix is smaller than signal matrix (``result.rows = signal.rows - kernel.rows + 1`` and ``result.columns = signal.columns - kernel.columns + 1``)
+ Performs a convolution on the given signal matrix using the given kernel (must have odd dimensions). Kernel does not extend beyond the boundaries of the signal matrix (i.e. applications of the kernel where it lies partly outside the signals boundaries are ignored), therefore the resulting matrix is smaller than signal matrix (``result.rows = signal.rows - kernel.rows + 1`` and ``result.columns = signal.columns - kernel.columns + 1``)
  */
-public func convolute(signalMatrix: SMLLMatrix, kernelMatrix: SMLLMatrix) -> SMLLMatrix {
+public func convoluteValidKernelOnly(signalMatrix: SMLLMatrix, kernelMatrix: SMLLMatrix) -> SMLLMatrix {
     var result = SMLLMatrix(mirrorShapeOf: signalMatrix)
     vDSP_imgfirD(signalMatrix.elements, vDSP_Length(signalMatrix.rows), vDSP_Length(signalMatrix.columns), kernelMatrix.elements, &result.elements, vDSP_Length(kernelMatrix.rows), vDSP_Length(kernelMatrix.columns))
     
     // Cut borders
     let verticalBorderWidth = (kernelMatrix.columns-1)/2
     let horizontalBorderWidth = (kernelMatrix.rows-1)/2
-    let elementsWithoutBorders = result.elements.enumerated().filter({(index, element) in
-        let notTopBorder = index >= (horizontalBorderWidth*result.columns)
-        let notBottomBorder = index < (result.elements.count - (horizontalBorderWidth*result.columns))
-        let notLeftBorder = index % result.columns >= verticalBorderWidth
-        let notRightBorder = index % result.columns < (result.columns-verticalBorderWidth)
-        return notTopBorder && notBottomBorder && notLeftBorder && notRightBorder
-    }).map({(index, element) in
-        return element
-    })
-    return SMLLMatrix(rows: result.rows-2*horizontalBorderWidth, columns: result.columns-2*verticalBorderWidth, values: elementsWithoutBorders)
+
+    return result.submatrix(byCuttingTopBorderOfWidth: horizontalBorderWidth, bottomBorderWidth: horizontalBorderWidth, leftBorderWidth: verticalBorderWidth, rightBorderWidth: verticalBorderWidth)
+}
+
+
+/**
+ Performs a convolution on the given signal matrix using the given kernel (must have odd dimensions). If the kernel lies partly outside of the signals boundaries during an application of the kernel, outside values are treated as 0. Resulting matrix has same dimensions as signal matrix.
+ */
+public func convoluteFullKernel(signalMatrix: SMLLMatrix, kernelMatrix: SMLLMatrix) -> SMLLMatrix {
+    // Add zero padding
+    let verticalBorderWidth = (kernelMatrix.columns-1)/2
+    let horizontalBorderWidth = (kernelMatrix.rows-1)/2
+    var sourceWithPadding = SMLLMatrix(rows: signalMatrix.rows+kernelMatrix.rows-1, columns: signalMatrix.columns+kernelMatrix.columns-1, repeatedValue: 0.0)
+    vDSP_mmovD(signalMatrix.elements, &sourceWithPadding.elements[verticalBorderWidth*sourceWithPadding.columns+horizontalBorderWidth], vDSP_Length(signalMatrix.columns), vDSP_Length(signalMatrix.rows), vDSP_Length(signalMatrix.columns), vDSP_Length(sourceWithPadding.columns))
+    // Valid convolution
+    return convoluteValidKernelOnly(signalMatrix: sourceWithPadding, kernelMatrix: kernelMatrix)
+}
+
+
+/**
+ 
+ */
+public func flatten(matrices: [SMLLMatrix], toVectorShape vectorShape: SMLLVectorShape) -> SMLLMatrix {
+    return SMLLMatrix(vectorShape: vectorShape, values: matrices.reduce([], { $0.0 + $0.1.elements }))
 }
 
 

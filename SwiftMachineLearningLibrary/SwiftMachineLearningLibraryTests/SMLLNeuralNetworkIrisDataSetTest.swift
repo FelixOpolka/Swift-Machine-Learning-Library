@@ -27,8 +27,8 @@ class SMLLNeuralNetworkIrisDataSetTest: XCTestCase {
                 return Double(component)!/maximumValues[index]
             })
             let desiredOutputValue = Int(components.last!)!
-            let inputVector = SMLLMatrix(shape: .columnVector, values: featureValues)
-            let desiredOutputVector = SMLLMatrix(versorWithNonZeroComponent: desiredOutputValue, shape: .columnVector, numberOfElements: 3)
+            let inputVector = SMLLMatrix(vectorShape: .columnVector, values: featureValues)
+            let desiredOutputVector = SMLLMatrix(versorWithNonZeroComponent: desiredOutputValue, vectorShape: .columnVector, numberOfElements: 3)
             return (input: inputVector, desiredOutput: desiredOutputVector)
         })
     }
@@ -39,7 +39,7 @@ class SMLLNeuralNetworkIrisDataSetTest: XCTestCase {
     }
     
     func testFullyConnectedNetwork() {
-        let fcnn = SMLLFullyConnectedNeuralNetwork(layerSizes: 4, 10, 3)
+        let fcnn = SMLLNeuralNetwork(inputLayerSize: SMLLLayerShape(features: 1, rows: 4, columns: 1), layers: SMLLFullyConnectedLayer(numberOfNeurons: 10), SMLLFullyConnectedLayer(numberOfNeurons: 3))
         dataSet.shuffle()
         let trainingSet = Array(dataSet[0..<130])
         let testSet = Array(dataSet[130..<150])
