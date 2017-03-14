@@ -37,8 +37,12 @@ class ViewController: UIViewController {
             
             // Train the network using SGD
             print("Train network...")
-            let fnn = SMLLFeedforwardNeuralNetwork(layerSizes: 784, 35, 10)
-            fnn.train(trainingSet, numberOfEpochs: 50, miniBatchSize: 10, learningRate: 0.25, testSet: testSet)
+            let convolutionLayer = SMLLConvolutionLayer(features: 10, kernelRows: 5, kernelColumns: 5)
+            let poolingLayer = SMLLMaxPoolingLayer(poolingRegionRows: 2, poolingRegionColumns: 2)
+            let fullyConnectedLayer1 = SMLLFullyConnectedLayer(numberOfNeurons: 100)
+            let fullyConnectedLayer2 = SMLLFullyConnectedLayer(numberOfNeurons: 10)
+            let cnn = SMLLNeuralNetwork(inputLayerSize: SMLLLayerShape(features: 1, rows: 28, columns: 28), layers: convolutionLayer, poolingLayer, fullyConnectedLayer1, fullyConnectedLayer2)
+            cnn.train(trainingSet: trainingSet, numberOfEpochs: 50, miniBatchSize: 10, learningRate: 0.1, testSet: testSet)
             print("Training done")
         }
     }
@@ -54,8 +58,8 @@ class ViewController: UIViewController {
     fileprivate func convertToSMLLFormat(_ rawSet: [(pixelData: [Int], label: Int)]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] {
         var set = [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]()
         for sample in rawSet {
-            let input = SMLLMatrix(shape: .columnVector, values: sample.pixelData.map { (Double)($0)/255.0 })
-            let output = SMLLMatrix(shape: .columnVector, values: stride(from: 0, to: 10, by: 1).map({ $0 == sample.label ? 1.0 : 0.0 }))
+            let input = SMLLMatrix(rows: 28, columns: 28, values: sample.pixelData.map { (Double)($0)/255.0 })
+            let output = SMLLMatrix(vectorShape: .columnVector, values: stride(from: 0, to: 10, by: 1).map({ $0 == sample.label ? 1.0 : 0.0 }))
             set.append((input, output))
         }
         return set
