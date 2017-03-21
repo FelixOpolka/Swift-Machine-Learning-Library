@@ -70,9 +70,9 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
     
     public func updateTotalGradients(layerOutputError: [SMLLMatrix]) -> [SMLLMatrix] {
         let layerOutputError = convertErrorToSuitableShape(error: layerOutputError)
-        let (localError, biasesGradients, weightsGradients) = backpropagate(layerOutputError: layerOutputError)
+        let (previousLayerOutputError, biasesGradients, weightsGradients) = backpropagate(layerOutputError: layerOutputError)
         updateTotalGradients(biasesGradients: biasesGradients, weightsGradients: weightsGradients)
-        return adaptErrorToInputShape(previousLayerOutputError: localError)
+        return adaptErrorToInputShape(previousLayerOutputError: previousLayerOutputError)
     }
     
     
@@ -115,13 +115,13 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
         - layerOutputError: Error in the output of this layer.
      - Returns: The error in outputs of previous layer, the biases and weights gradients of this layer.
      */
-    fileprivate func backpropagate(layerOutputError: SMLLMatrix) -> (localError: SMLLMatrix, biasesGradients: SMLLMatrix, weightsGradients: SMLLMatrix) {
+    fileprivate func backpropagate(layerOutputError: SMLLMatrix) -> (previousLayerOutputError: SMLLMatrix, biasesGradients: SMLLMatrix, weightsGradients: SMLLMatrix) {
         guard let mostRecentInputs = mostRecentInputs, let mostRecentWeightedSums = mostRecentWeightedSums
         else { assert(false, "Cannot backpropagate without previous forward propagation.") }
-        let localError = layerOutputError ○ activation.applyDerivative(mostRecentWeightedSums)
-        let biasesGradients = localError
-        let weightsGradients = localError * mostRecentInputs.transpose()
-        return (weights.transpose() * localError, biasesGradients, weightsGradients)
+        let deltas = layerOutputError ○ activation.applyDerivative(mostRecentWeightedSums)
+        let biasesGradients = deltas
+        let weightsGradients = deltas * mostRecentInputs.transpose()
+        return (weights.transpose() * deltas, biasesGradients, weightsGradients)
     }
     
     
