@@ -75,11 +75,11 @@ class DigitsDataSet {
         // Iterate over each digit and corresponding sample arrays.
         let smllDataSet = digitSamples.map({(digit: Int, samples: [PixelFillBitmap]) -> [(input: SMLLMatrix, desiredOutput: SMLLMatrix)] in
             // Build desired output vector for the current digit.
-            let desiredOutputVectorForCurrentDigit = SMLLMatrix(versorWithNonZeroComponent: digit, shape: .columnVector, numberOfElements: 10)
+            let desiredOutputVectorForCurrentDigit = SMLLMatrix(versorWithNonZeroComponent: digit, vectorShape: .columnVector, numberOfElements: 10)
             print(desiredOutputVectorForCurrentDigit)
             // Converts the array of bitmaps into an array of SMLLMatrices.
             let smllMatricesForCurrentDigit = samples.map({(sample: PixelFillBitmap) -> SMLLMatrix in
-                return SMLLMatrix(shape: .columnVector, values: Array(sample.pixels.joined()))
+                return SMLLMatrix(vectorShape: .columnVector, values: Array(sample.pixels.joined()))
             })
             // Creates the input-vector and corresponding desired output vector pairs for the current digit.
             let smllDataSubsetForCurrentDigit = smllMatricesForCurrentDigit.map({(sampleMatrix: SMLLMatrix) -> (input: SMLLMatrix, desiredOutput: SMLLMatrix) in
