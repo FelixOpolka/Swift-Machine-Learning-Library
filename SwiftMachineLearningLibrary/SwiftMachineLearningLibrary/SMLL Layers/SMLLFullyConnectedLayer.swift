@@ -55,7 +55,7 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
         let input = convertInputToSuitableShape(input: input)
         mostRecentInputs = input
         mostRecentWeightedSums = weights * input + biases
-        return [sigmoid(mostRecentWeightedSums!)]
+        return [activation.apply(mostRecentWeightedSums!)]
     }
     
     
@@ -118,7 +118,7 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
     fileprivate func backpropagate(layerOutputError: SMLLMatrix) -> (localError: SMLLMatrix, biasesGradients: SMLLMatrix, weightsGradients: SMLLMatrix) {
         guard let mostRecentInputs = mostRecentInputs, let mostRecentWeightedSums = mostRecentWeightedSums
         else { assert(false, "Cannot backpropagate without previous forward propagation.") }
-        let localError = layerOutputError ○ sigmoidPrime(mostRecentWeightedSums)
+        let localError = layerOutputError ○ activation.applyDerivative(mostRecentWeightedSums)
         let biasesGradients = localError
         let weightsGradients = localError * mostRecentInputs.transpose()
         return (weights.transpose() * localError, biasesGradients, weightsGradients)
@@ -135,12 +135,37 @@ public class SMLLFullyConnectedLayer: SMLLLayer {
     }
     
     
-    fileprivate func sigmoid(_ z: SMLLMatrix) -> SMLLMatrix {
-        return 1.0 / (1.0 + exp(-z))
+    public var parameterCount: Int {
+        return weights.elements.count + biases.elements.count
     }
     
     
-    fileprivate func sigmoidPrime(_ z: SMLLMatrix) -> SMLLMatrix {
-        return sigmoid(z) ○ (1.0 - sigmoid(z))
+    public func getParameter(atIndex index: Int) -> Double {
+        if index < biases.elements.count {
+            return biases.elements[index]
+        } else {
+            let adjustedIndex = index - biases.elements.count
+            return weights.elements[adjustedIndex]
+        }
+    }
+    
+    
+    public func setParameter(atIndex index: Int, newValue: Double) {
+        if index < biases.elements.count {
+            biases.elements[index] = newValue
+        } else {
+            let adjustedIndex = index - biases.elements.count
+            weights.elements[adjustedIndex] = newValue
+        }
+    }
+    
+    
+    public func getTotalGradient(atIndex index: Int) -> Double? {
+        if index < biases.elements.count {
+            return totalGradients?.biasesGradients.elements[index]
+        } else {
+            let adjustedIndex = index - biases.elements.count
+            return totalGradients?.weightsGradients.elements[adjustedIndex]
+        }
     }
 }

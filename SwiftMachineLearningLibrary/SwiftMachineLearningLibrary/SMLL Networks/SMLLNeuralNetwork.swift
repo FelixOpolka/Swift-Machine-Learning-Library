@@ -107,13 +107,46 @@ open class SMLLNeuralNetwork {
     
     
     /**
+     Performs a numeric gradient check on each parameter of each layer of the network by printing both the numeric gradient and the gradient calculated by backpropagation.
+     */
+    open func gradientCheck() {
+        guard let outputShape = layers.last?.outputShape else { return }
+        let testSample = (input: SMLLMatrix(normalRandomValuesMatrixWithRows: inputLayerShape.rows, columns: inputLayerShape.columns), desiredOutput: SMLLMatrix(normalRandomValuesMatrixWithRows: outputShape.rows, columns: outputShape.columns))
+        updateTotalGradients(forMiniBatch: [testSample])
+        let inputError = 1e-5
+        for layer in layers {
+            for parameterIndex in 0..<layer.parameterCount {
+                let previousValue = layer.getParameter(atIndex: parameterIndex)
+                layer.setParameter(atIndex: parameterIndex, newValue: previousValue+inputError)
+                let error1 = cost(actualOutput: predict(input: testSample.input), desiredOutput: testSample.desiredOutput)
+                layer.setParameter(atIndex: parameterIndex, newValue: previousValue-inputError)
+                let error2 = cost(actualOutput: predict(input: testSample.input), desiredOutput: testSample.desiredOutput)
+                let numericGradient = (error1 - error2) / (2*inputError)
+                print(numericGradient)
+                print(layer.getTotalGradient(atIndex: parameterIndex)!)
+            }
+        }
+    }
+    
+    
+    /**
      Updates the networks weights and biases using gradient descent. Calculates the gradients of the network's weights and biases via backpropagation using a given set of training examples.
      - Parameters:
         - miniBatch: Set of samples with each consisting of the input which the network should predict and the corresponding desired output.
         - learningRate: The learning rate to be used for gradient descent.
      */
     fileprivate func updateMiniBatch(_ miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
-        // Calculate the gradients for each mini batch. Gradients are stored in the layers itself.
+        updateTotalGradients(forMiniBatch: miniBatch)
+        updateParameters(learningRate: learningRate, miniBatchSize: miniBatch.count)
+    }
+    
+    
+    /**
+     Calculates the gradients for the given mini batch. Gradients are added to the total gradients which are stored in each layer.
+     - Parameters:
+        - miniBatch: Set of samples with each consisting of the input which the network should predict and the corresponding desired output. Used for calculating the gradients of the parameters.
+     */
+    fileprivate func updateTotalGradients(forMiniBatch miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)]) {
         miniBatch.forEach({(input: SMLLMatrix, desiredOutput: SMLLMatrix) in
             let outputLayerOutput = predict(input: input)
             let outputLayerError = costDerivative(outputLayerOutput, desiredOutput: desiredOutput)
@@ -121,18 +154,34 @@ open class SMLLNeuralNetwork {
                 return currentLayer.updateTotalGradients(layerOutputError: successiveLayerError)
             })
         })
-        // Update the network's parameters (i.e. weights and biases) by adding a step depending on the total gradient calculated by iterating over the mini batch.
+    }
+    
+    
+    /**
+     Updates the network's parameters (i.e. weights and biases) by adding a step depending on the total gradients stored inside the network's layers which were calculated by previous iterations of the backpropagation algorithm. Final step of (stochastic) gradient descent.
+     - Parameters:
+        - learningRate: Learning rate to use for gradient descent.
+        - miniBatchSize: Number of samples in the mini batch that contributed to the total gradients.
+     */
+    fileprivate func updateParameters(learningRate: Double, miniBatchSize: Int) {
         layers.forEach({layer in
             layer.adjustParameters(stepCalculation: {totalGradients in
-                return -totalGradients * (learningRate / (Double)(miniBatch.count))
+                return -totalGradients * (learningRate / (Double)(miniBatchSize))
             })
         })
     }
+    
     
     /**
      First derivative of the cost function used to determine the array of the network in the output layer.
      */
     fileprivate func costDerivative(_ output: SMLLMatrix, desiredOutput: SMLLMatrix) -> SMLLMatrix {
         return output - desiredOutput
+    }
+    
+    
+    func cost(actualOutput: SMLLMatrix, desiredOutput: SMLLMatrix) -> Double {
+        let outputDiff = actualOutput-desiredOutput
+        return (outputDiff.toMatrix(ofVectorShape: .rowVector) * outputDiff).elements.first! * 0.5
     }
 }

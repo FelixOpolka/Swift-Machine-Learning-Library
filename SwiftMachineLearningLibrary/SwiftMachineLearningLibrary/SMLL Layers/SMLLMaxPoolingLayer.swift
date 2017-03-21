@@ -74,4 +74,23 @@ public class SMLLMaxPoolingLayer: SMLLLayer {
         // No parameters to adjust
     }
     
+    
+    public var parameterCount: Int {
+        return 0
+    }
+    
+    
+    public func getParameter(atIndex index: Int) -> Double {
+        assert(false, "No parameters available")
+    }
+    
+    
+    public func setParameter(atIndex index: Int, newValue: Double) {
+        // No parameters
+    }
+    
+    public func getTotalGradient(atIndex index: Int) -> Double? {
+        return nil
+    }
+    
 }

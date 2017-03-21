@@ -49,4 +49,36 @@ public protocol SMLLLayer {
         - stepCalculation: Function for calculation the step for each parameter given the total gradient for this parameter.
      */
     func adjustParameters(stepCalculation: (SMLLMatrix) -> SMLLMatrix)
+    
+    
+    /**
+     Total number of parameters of the layer relevant for learning the network (e.g. total number of weights and biases).
+     */
+    var parameterCount: Int { get }
+    
+    
+    /**
+     Returns the value of the layer's parameter at the given index. An index always refers to the same parameter in the layer, however no specific structural order is guaranteed or visible to the caller of this method (i.e. which index refers to which parameter is layer-internal information). Use when iterating over all parameters of a layer. All three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method (i.e. same index refers to same parameter for all three methods).
+     - Parameters:
+        - index: Index of the layer's parameter.
+     - Note: When implementing this method for a new layer, make sure that all three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method.
+     */
+    func getParameter(atIndex index: Int) -> Double
+    
+    
+    /**
+     Sets the value of the layer's parameter at the given index to the given value. An index always refers to the same parameter in the layer, however no specific structural order is guaranteed or visible to the caller of this method (i.e. which index refers to which parameter is layer-internal information). Use when iterating over all parameters of a layer. All three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method (i.e. same index refers to same parameter for all three methods).
+     - Parameters:
+        - index: Index of the layer's parameter.
+     - Note: When implementing this method for a new layer, make sure that all three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method.
+     */
+    func setParameter(atIndex index: Int, newValue: Double)
+    
+    /**
+     Returns the total gradient value for the layer's parameter at the given index. An index always refers to the same parameter in the layer, however no specific structural order is guaranteed or visible to the caller of this method (i.e. which index refers to which parameter is layer-internal information). Use when iterating over all parameters of a layer. All three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method (i.e. same index refers to same parameter for all three methods).
+     - Parameters:
+        - index: Index of the layer's parameter.
+     - Note: When implementing this method for a new layer, make sure that all three methods `setParameter(atIndex,newValue)`, `getParameter(atIndex)` and `getTotalGradient(atIndex)` use the same indexing method.
+     */
+    func getTotalGradient(atIndex index: Int) -> Double?
 }

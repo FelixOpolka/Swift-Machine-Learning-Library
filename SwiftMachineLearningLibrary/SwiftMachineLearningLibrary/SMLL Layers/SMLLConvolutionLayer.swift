@@ -15,7 +15,7 @@ public class SMLLConvolutionLayer: SMLLLayer {
     /// Weight matrices/ kernels for each feature used for performing the convolution on the input.
     var weights: [SMLLMatrix]
     
-    /// Bias for each feature added to each convolution result.
+    /// Bias for each feature added to each convolution result. Array of 1x1-matrices.
     var bias: [SMLLMatrix]
     
     /// Non-linear activation function used in this layer.
@@ -126,5 +126,46 @@ public class SMLLConvolutionLayer: SMLLLayer {
             featureWeights + stepCalculation(featureTotalGradients.weightsGradients)
         })
         self.totalGradients = nil
+    }
+    
+    
+    public var parameterCount: Int {
+        return weights.count * kernelRows * kernelColumns + bias.count
+    }
+    
+    
+    public func getParameter(atIndex index: Int) -> Double {
+        if index < bias.count {
+            return bias[index].elements.first!
+        } else {
+            let adjustedIndex = index - bias.count
+            let featureIndex = adjustedIndex / (kernelRows * kernelColumns)
+            let adjustedParameterIndex = adjustedIndex % (kernelRows * kernelColumns)
+            return weights[featureIndex].elements[adjustedParameterIndex]
+        }
+    }
+    
+    
+    public func setParameter(atIndex index: Int, newValue: Double) {
+        if index < bias.count {
+            bias[index].elements[0] = newValue
+        } else {
+            let adjustedIndex = index - bias.count
+            let featureIndex = adjustedIndex / (kernelRows * kernelColumns)
+            let adjustedParameterIndex = adjustedIndex % (kernelRows * kernelColumns)
+            weights[featureIndex].elements[adjustedParameterIndex] = newValue
+        }
+    }
+    
+    
+    public func getTotalGradient(atIndex index: Int) -> Double? {
+        if index < bias.count {
+            return totalGradients?[index].biasesGradients.elements.first
+        } else {
+            let adjustedIndex = index - bias.count
+            let featureIndex = adjustedIndex / (kernelRows * kernelColumns)
+            let adjustedParameterIndex = adjustedIndex % (kernelRows * kernelColumns)
+            return totalGradients?[featureIndex].weightsGradients.elements[adjustedParameterIndex]
+        }
     }
 }
