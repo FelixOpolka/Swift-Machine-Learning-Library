@@ -65,7 +65,7 @@ class UseNetworkViewController: UIViewController {
     @IBAction func recognizeButtonPressed(_ sender: UIBarButtonItem) {
         guard let inputImage = digitDrawingView.getImage() else { return }
         guard let prepocessedInputBitmap = digitImagePrepocessor.prepocessDigitImage(image: inputImage) else { return }
-        let smllInputVector = SMLLMatrix(shape: SMLLMatrixShape.columnVector, values: Array(prepocessedInputBitmap.pixels.joined()))
+        let smllInputVector = SMLLMatrix(vectorShape: SMLLVectorShape.columnVector, values: Array(prepocessedInputBitmap.pixels.joined()))
         if let outputVector = network?.feedforward(smllInputVector) {
             displayOutputVector(outputVector: outputVector)
         }

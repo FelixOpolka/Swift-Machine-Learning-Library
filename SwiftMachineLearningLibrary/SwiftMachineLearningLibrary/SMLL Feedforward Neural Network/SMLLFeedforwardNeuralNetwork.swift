@@ -6,6 +6,14 @@
 //  Copyright © 2016 Felix Opolka. All rights reserved.
 //
 
+/*
+ * ============================== PLEASE NOTE ==============================
+ * This is a deprecated implementation of a fully connected neural network. 
+ * It's only used inside the DigitRecognition example as the generic 
+ * SMLLNeuralNetwork does not yet support persisting its state.
+ * =========================================================================
+ */
+
 import Foundation
 
 public enum SMLLIOError: Error {
@@ -33,8 +41,8 @@ open class SMLLFeedforwardNeuralNetwork {
         self.biases = [SMLLMatrix]()
         self.weights = [SMLLMatrix]()
         for index in 1..<layerSizes.count {
-            self.biases.append(SMLLMatrix(rows: layerSizes[index], columns: 1, normalRandomValues: true))
-            self.weights.append(SMLLMatrix(rows: layerSizes[index], columns: layerSizes[index-1], normalRandomValues: true))
+            self.biases.append(SMLLMatrix(normalRandomValuesMatrixWithRows: layerSizes[index], columns: 1))
+            self.weights.append(SMLLMatrix(normalRandomValuesMatrixWithRows: layerSizes[index], columns: layerSizes[index-1]))
         }
     }
     
@@ -63,8 +71,8 @@ open class SMLLFeedforwardNeuralNetwork {
     /**
      Feeds a given input through the network.
      - Parameters:
-     - input: The input to feed through the network. Must be a column vector matching the number of input-neurons of the network.
-     - Returns: The output of network. A column vector matching the number of output-neurons of the network.
+        - input: The input to feed through the network. Must be a column vector matching the number of input-neurons of the network.
+        - Returns: The output of network. A column vector matching the number of output-neurons of the network.
      */
     open func feedforward(_ input: SMLLMatrix) -> SMLLMatrix {
         assert(input.columns == 1, "Feedforward-input must be a column vector.")
@@ -117,8 +125,8 @@ open class SMLLFeedforwardNeuralNetwork {
     /**
      Updates the networks weights and biases using gradient descent. Calculates the gradients of the network's weights and biases via backpropagation using a given set of training examples.
      - Parameters:
-     - miniBatch: A tuple containing the `input` to feed through the network and the `desired output` of the network corresponding to the given input.
-     - learningRate: The learning rate to be used for gradient descent.
+        - miniBatch: A tuple containing the `input` to feed through the network and the `desired output` of the network corresponding to the given input.
+        - learningRate: The learning rate to be used for gradient descent.
      */
     fileprivate func updateMiniBatch(_ miniBatch: [(input: SMLLMatrix, desiredOutput: SMLLMatrix)], learningRate: Double) {
         guard let firstTrainingExample = miniBatch.first else {return}
@@ -141,11 +149,11 @@ open class SMLLFeedforwardNeuralNetwork {
     /**
      Implementation of the backpropagation algorithm: Calculates the networks output to a given input. The actual output is compared to a given desired Output. The error between those two items is then backpropagated through the network to receive the gradient of each weight and biase in the network.
      - Parameters:
-     - input: The input to feed through the network.
-     - desiredOutput: The optimal output of the network corresponding to the given input.
+        - input: The input to feed through the network.
+        - desiredOutput: The optimal output of the network corresponding to the given input.
      - Returns: A tuple containing the gradient of the network's biases and weights.
-     - `biasesGradients`: An array of column vectors with each one matching the number of neurons in one of the network's layers (Starting with first. Each vector contains the gradient for every biase in the corresponding layer.
-     - `weightsGradients`: An array of matrices with each one matching the number of weights between two of the network's layers (Starting between the first and second layer). Each matrix contains the gradient for every weight between the two corresponding layers.
+        - `biasesGradients`: An array of column vectors with each one matching the number of neurons in one of the network's layers (Starting with first. Each vector contains the gradient for every biase in the corresponding layer.
+        - `weightsGradients`: An array of matrices with each one matching the number of weights between two of the network's layers (Starting between the first and second layer). Each matrix contains the gradient for every weight between the two corresponding layers.
      */
     fileprivate func backpropagate(_ input: SMLLMatrix, desiredOutput: SMLLMatrix) -> (biasesGradients: [SMLLMatrix], weightsGradients: [SMLLMatrix]) {
         var weightsGradients = [SMLLMatrix]()
@@ -211,21 +219,4 @@ open class SMLLFeedforwardNeuralNetwork {
     }
     
     
-}
-
-
-extension MutableCollection where Index == Int {
-    /**
-     Performs an in-place, uniform Fisher-Yates shuffle.
-     */
-    mutating func shuffle() {
-        // Collections with one element or less cannot be shuffled
-        if count <= 1 { return }
-
-        for i in startIndex..<endIndex-1 {
-            let j = Int(arc4random_uniform(UInt32(endIndex - i))) + i
-            guard i != j else { continue }
-            swap(&self[i], &self[j])
-        }
-    }
 }
