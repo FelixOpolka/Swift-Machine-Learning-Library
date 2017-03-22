@@ -7,6 +7,8 @@ might think) and train neural networks with different parameters using these
 data sets. Once trained, you can test them in action by letting them recognize
 new digits you draw on your screen.
 
+> **Please note:** Even though convolutional networks are impemented by the library, this example still uses an old implementation of a fully connected neural network, as I have not yet added support for persisting the generic network's state.
+
 
 ## Usage
 
@@ -18,16 +20,15 @@ Before you can train your first network, you will have to create a data set. You
 
 That may depend on what results you expect. I have found that entering 100-200
 samples (in total) is sufficient, though you might achieve better results by
-entering more samples. Entering 100 digits takes about 5 minutes; it helps when
-you consider it meditation.
+entering more samples. Entering 100 digits takes about 5 minutes (it helps when
+you consider it some form of meditation).
 
 > **How do I create and train a network?**
 
 In the main menu, just press the plus button, specify some parameters, select
 the network and hit "Train". Again specify some parameters for training and off
 we go. Please note that in the current state of the app, the network's
-performance after each epoch is only printed to the console (I will change that
-soon).
+performance after each epoch is only printed to the console.
 
 > **Which parameter values work well?**
 
@@ -55,6 +56,7 @@ in the future:
   - [x] Network training with adjustable number of epochs and user-selected data
   set
   - [x] Network testing in action
+  - [ ] Convolutional network
   - [ ] Better preprocessing
   - [ ] More adjustable parameters (learning rate, minibatch size)
   - [ ] Better logging
