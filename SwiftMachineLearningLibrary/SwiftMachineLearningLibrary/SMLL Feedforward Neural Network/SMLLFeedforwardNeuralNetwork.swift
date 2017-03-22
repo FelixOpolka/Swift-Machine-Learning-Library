@@ -6,6 +6,14 @@
 //  Copyright © 2016 Felix Opolka. All rights reserved.
 //
 
+/*
+ * ============================== PLEASE NOTE ==============================
+ * This is a deprecated implementation of a fully connected neural network. 
+ * It's only used inside the DigitRecognition example as the generic 
+ * SMLLNeuralNetwork does not yet support persisting its state.
+ * =========================================================================
+ */
+
 import Foundation
 
 public enum SMLLIOError: Error {
